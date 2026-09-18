@@ -1,9 +1,9 @@
 /* ==========================================================================
-   AURA STUDIO - LUXURY MINIMALIST E-COMMERCE & PAYMENT SIMULATOR STYLES
+   AURA STUDIO - LUXURY MINIMALIST E-COMMERCE STYLES
    ========================================================================== */
 
 :root {
-  /* Color Palette - Deep Obsidian & Sleek Accents */
+  /* Color Palette - Deep Obsidian & Refined Accents */
   --bg-dark: #07090e;
   --bg-primary: #0d111a;
   --bg-secondary: #141b29;
@@ -31,7 +31,6 @@
   --status-warning-bg: rgba(245, 158, 11, 0.12);
   --status-danger: #ef4444;
   --status-danger-bg: rgba(239, 68, 68, 0.12);
-  --status-info: #0ea5e9;
 
   /* Typography */
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -115,10 +114,11 @@ button, input, select {
    Announcement Top Bar
    ========================================================================== */
 .announcement-bar {
-  background: linear-gradient(90deg, #1e1b4b, #1e293b, #1e1b4b);
-  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-  padding: 0.55rem 1rem;
-  font-size: 0.82rem;
+  background: linear-gradient(90deg, #1e1b4b, #111827, #1e1b4b);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.6rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
   color: #c7d2fe;
 }
 
@@ -127,39 +127,20 @@ button, input, select {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  flex-wrap: wrap;
 }
 
 .pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background-color: var(--accent-primary);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary);
   animation: pulse-dot-anim 1.8s infinite;
 }
 
 @keyframes pulse-dot-anim {
   0%, 100% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.4); opacity: 0.4; }
-}
-
-.pill-btn-sm {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  border-radius: var(--radius-full);
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.pill-btn-sm:hover {
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  color: #fff;
 }
 
 /* ==========================================================================
@@ -169,11 +150,11 @@ button, input, select {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(7, 9, 14, 0.82);
+  background: rgba(7, 9, 14, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 1rem 0;
+  padding: 1.15rem 0;
 }
 
 .header-container {
@@ -201,7 +182,7 @@ button, input, select {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.25rem;
 }
 
 .nav-link {
@@ -231,26 +212,6 @@ button, input, select {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.scenario-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.scenario-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: var(--status-warning);
 }
 
 .cart-trigger-btn {
@@ -296,7 +257,7 @@ button, input, select {
    Hero Section
    ========================================================================== */
 .hero-section {
-  padding: 4rem 0 3rem;
+  padding: 4.5rem 0 3.5rem;
   position: relative;
 }
 
@@ -322,7 +283,7 @@ button, input, select {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 3.2rem;
+  font-size: 3.4rem;
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -444,16 +405,6 @@ button, input, select {
   transform: translateY(-2px);
 }
 
-.btn-ghost {
-  background: transparent;
-  color: var(--text-secondary);
-}
-
-.btn-ghost:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-}
-
 .btn-block {
   width: 100%;
 }
@@ -476,16 +427,6 @@ button, input, select {
 }
 .btn-success-outline:hover {
   background: var(--status-success);
-  color: #fff;
-}
-
-.btn-danger-outline {
-  background: var(--status-danger-bg);
-  border: 1px solid var(--status-danger);
-  color: #f87171;
-}
-.btn-danger-outline:hover {
-  background: var(--status-danger);
   color: #fff;
 }
 
@@ -694,17 +635,17 @@ button, input, select {
 }
 
 /* ==========================================================================
-   Simulator Guide Section
+   Brand Values Section
    ========================================================================== */
-.simulator-guide-section {
+.values-section {
   padding: 4rem 0 5rem;
 }
 
-.guide-card {
-  padding: 2.5rem;
+.values-card {
+  padding: 3rem 2.5rem;
 }
 
-.guide-badge {
+.values-badge {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -714,66 +655,50 @@ button, input, select {
   margin-bottom: 0.75rem;
 }
 
-.guide-title {
+.values-title {
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
 }
 
-.guide-desc {
+.values-desc {
   color: var(--text-secondary);
-  max-width: 780px;
+  max-width: 680px;
   font-size: 0.95rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-.scenario-grid {
+.values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.75rem;
 }
 
-.scenario-card {
+.value-item {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1.25rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  transition: var(--transition-fast);
 }
 
-.scenario-card:hover {
-  border-color: var(--border-highlight);
-  transform: translateY(-3px);
-}
-
-.scenario-icon {
+.value-icon {
   font-size: 1.75rem;
   margin-bottom: 0.75rem;
 }
 
-.scenario-card h3 {
-  font-size: 0.98rem;
+.value-item h3 {
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.45rem;
 }
 
-.scenario-card p {
-  font-size: 0.8rem;
+.value-item p {
+  font-size: 0.82rem;
   color: var(--text-secondary);
-  margin-bottom: 1.25rem;
   line-height: 1.5;
-  flex: 1;
-}
-
-.scenario-card code {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 0.1rem 0.35rem;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
 }
 
 /* ==========================================================================
@@ -1015,7 +940,7 @@ button, input, select {
 }
 
 /* ==========================================================================
-   Checkout & Simulation Modal
+   Checkout Modal
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -1243,82 +1168,6 @@ button, input, select {
   color: var(--text-muted);
 }
 
-/* Simulator Scenario Radio Picker inside Checkout */
-.sim-selector-container {
-  background: rgba(245, 158, 11, 0.05);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
-  margin: 1.25rem 0;
-}
-
-.sim-selector-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.65rem;
-}
-
-.sim-badge {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--status-warning);
-  letter-spacing: 0.05em;
-}
-
-.sim-note {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.scenario-radio-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.45rem;
-}
-
-.scenario-radio-option {
-  cursor: pointer;
-  display: block;
-}
-
-.scenario-radio-option input {
-  display: none;
-}
-
-.radio-card {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.45rem 0.75rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  transition: var(--transition-fast);
-}
-
-.scenario-radio-option input:checked + .radio-card {
-  border-color: var(--status-warning);
-  background: rgba(245, 158, 11, 0.12);
-}
-
-.radio-indicator {
-  font-size: 1rem;
-}
-
-.radio-text strong {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--text-primary);
-}
-
-.radio-text small {
-  display: block;
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-}
-
 /* Sidebar Order Items Preview */
 .sidebar-title {
   font-size: 0.88rem;
@@ -1501,18 +1350,6 @@ button, input, select {
   padding-top: 0.85rem;
 }
 
-.recovery-actions-panel h4 {
-  font-size: 0.82rem;
-  margin-bottom: 0.35rem;
-  color: var(--text-primary);
-}
-
-.recovery-actions-panel p {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-}
-
 .recovery-btn-group {
   display: flex;
   flex-direction: column;
@@ -1617,142 +1454,6 @@ button, input, select {
 }
 
 /* ==========================================================================
-   Floating Demo Dock & Console Log Modal
-   ========================================================================== */
-.floating-demo-dock {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 80;
-}
-
-.dock-pill {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-highlight);
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(99, 102, 241, 0.2);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  padding: 0.35rem;
-}
-
-.dock-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.85rem;
-  cursor: pointer;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-.dock-status-tag {
-  background: rgba(245, 158, 11, 0.2);
-  color: #fbbf24;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-full);
-  font-size: 0.72rem;
-}
-
-.dock-icon-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
-  color: #fff;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.dock-icon-btn:hover {
-  background: var(--accent-primary);
-}
-
-/* Diagnostics Console Modal */
-.console-modal {
-  width: 100%;
-  max-width: 720px;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.console-body {
-  padding: 1.25rem;
-  overflow-y: auto;
-}
-
-.console-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.85rem;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-}
-
-.console-log-feed {
-  background: #05070a;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  height: 220px;
-  overflow-y: auto;
-  margin-bottom: 1.25rem;
-}
-
-.log-entry {
-  padding: 0.35rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  gap: 0.75rem;
-}
-
-.log-time { color: var(--text-muted); }
-.log-level-INFO { color: var(--accent-primary); }
-.log-level-WARN { color: var(--status-warning); }
-.log-level-ERROR { color: var(--status-danger); }
-.log-level-SUCCESS { color: var(--status-success); }
-.log-msg { color: var(--text-primary); }
-
-.console-docs-box {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-}
-
-.console-docs-box h4 {
-  font-size: 0.85rem;
-  margin-bottom: 0.35rem;
-}
-
-.console-docs-box p {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.6rem;
-}
-
-.code-snippet {
-  background: #05070a;
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  padding: 0.75rem;
-  font-size: 0.72rem;
-  overflow-x: auto;
-  color: #e2e8f0;
-}
-
-/* ==========================================================================
    Toast Notifications
    ========================================================================== */
 .toast-container {
@@ -1806,19 +1507,6 @@ button, input, select {
   color: var(--text-secondary);
   margin-top: 0.5rem;
   max-width: 380px;
-}
-
-.demo-tag {
-  display: inline-block;
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  color: #a5b4fc;
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 0.5rem;
 }
 
 .footer-meta p {

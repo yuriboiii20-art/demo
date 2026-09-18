@@ -1,6 +1,5 @@
 /**
- * AURA STUDIO - E-Commerce & Payment Failure Simulation Engine
- * Author: Yuri (Demo Payment Recovery Testbed)
+ * AURA STUDIO - Luxury Apparel E-Commerce & Payment Engine
  */
 
 (function () {
@@ -73,7 +72,13 @@
   ];
 
   // =========================================================================
-  // 2. APPLICATION STATE
+  // 2. SCENARIO ROTATION (TRIGGERS ONE REALISTIC ISSUE EVERY PAYMENT)
+  // =========================================================================
+  const PAYMENT_SCENARIOS = ['stuck', 'declined', 'timeout', 'auth_fail'];
+  let currentScenarioIndex = 0;
+
+  // =========================================================================
+  // 3. APPLICATION STATE
   // =========================================================================
   const state = {
     cart: [
@@ -95,47 +100,24 @@
       }
     ],
     selectedCategory: 'all',
-    activeScenario: 'stuck', // 'stuck' | 'declined' | 'timeout' | 'auth_fail' | 'success'
     paymentMethod: 'card',
     appliedCoupon: null,
     discountAmount: 0,
     currentTransaction: null,
     stuckTimerInterval: null,
-    stuckSeconds: 0,
-    logs: []
-  };
-
-  const SCENARIO_LABELS = {
-    stuck: 'Stuck in Pending',
-    declined: 'Card Declined (402)',
-    timeout: '504 Gateway Timeout',
-    auth_fail: '3DS / OTP Failed',
-    success: 'Payment Success'
+    stuckSeconds: 0
   };
 
   // =========================================================================
-  // 3. LOGGING & EVENT EMITTER ENGINE
+  // 4. EVENT EMITTER (FOR BACKEND/SOLUTIONS LISTENING)
   // =========================================================================
   function logEvent(level, message, metadata = {}) {
-    const timestamp = new Date().toLocaleTimeString();
     const isoDate = new Date().toISOString();
-    const entry = {
-      timestamp,
-      isoDate,
-      level,
-      message,
-      metadata
-    };
-    state.logs.unshift(entry);
-    renderLogs();
-
-    // Dispatch a browser-level custom event so external scripts/test harnesses can listen!
     const customEvent = new CustomEvent('payment_event', {
       detail: {
         timestamp: isoDate,
         level,
         message,
-        scenario: state.activeScenario,
         transaction: state.currentTransaction,
         ...metadata
       }
@@ -144,24 +126,8 @@
     console.log(`[AURA GATEWAY ${level}]`, message, metadata);
   }
 
-  function renderLogs() {
-    const feed = document.getElementById('console-log-feed');
-    const countEl = document.getElementById('log-count');
-    if (!feed) return;
-
-    if (countEl) countEl.textContent = `${state.logs.length} events logged`;
-
-    feed.innerHTML = state.logs.map(log => `
-      <div class="log-entry">
-        <span class="log-time">[${log.timestamp}]</span>
-        <span class="log-level-${log.level}">[${log.level}]</span>
-        <span class="log-msg">${escapeHtml(log.message)}</span>
-      </div>
-    `).join('');
-  }
-
   // =========================================================================
-  // 4. UI NOTIFICATIONS (TOASTS)
+  // 5. TOAST NOTIFICATIONS
   // =========================================================================
   function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
@@ -186,7 +152,7 @@
   }
 
   // =========================================================================
-  // 5. PRODUCT CATALOG RENDERING
+  // 6. PRODUCT CATALOG RENDERING
   // =========================================================================
   function renderProducts() {
     const grid = document.getElementById('product-grid');
@@ -211,7 +177,7 @@
           
           <div class="size-selector-row">
             <span class="size-label">Size:</span>
-            ${product.sizes.map((sz, idx) => `
+            ${product.sizes.map(sz => `
               <button type="button" class="size-pill ${sz === product.selectedSize ? 'active' : ''}" data-product-id="${product.id}" data-size="${sz}">
                 ${sz}
               </button>
@@ -226,7 +192,6 @@
       </article>
     `).join('');
 
-    // Attach size change listeners
     grid.querySelectorAll('.size-pill').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const prodId = e.currentTarget.getAttribute('data-product-id');
@@ -239,7 +204,6 @@
       });
     });
 
-    // Attach add to cart listeners
     grid.querySelectorAll('.add-to-cart-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const prodId = e.currentTarget.getAttribute('data-product-id');
@@ -249,7 +213,7 @@
   }
 
   // =========================================================================
-  // 6. CART MANAGEMENT
+  // 7. CART MANAGEMENT
   // =========================================================================
   function addToCart(productId) {
     const product = PRODUCTS.find(p => p.id === productId);
@@ -274,22 +238,19 @@
 
     updateCartUI();
     showToast(`Added "${product.name}" (${product.selectedSize}) to bag!`, 'success');
-    logEvent('INFO', `Item added to cart: ${product.name} (Size: ${product.selectedSize})`);
   }
 
   function updateItemQty(index, change) {
     if (!state.cart[index]) return;
     state.cart[index].qty += change;
     if (state.cart[index].qty <= 0) {
-      const removed = state.cart.splice(index, 1);
-      logEvent('INFO', `Removed ${removed[0].name} from cart.`);
+      state.cart.splice(index, 1);
     }
     updateCartUI();
   }
 
   function removeFromCart(index) {
-    const removed = state.cart.splice(index, 1);
-    logEvent('INFO', `Removed ${removed[0].name} from cart.`);
+    state.cart.splice(index, 1);
     updateCartUI();
   }
 
@@ -325,7 +286,6 @@
     if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
     if (btnPreviewEl) btnPreviewEl.textContent = `$${total.toFixed(2)}`;
 
-    // Sync Checkout modal preview values too
     const payBtnAmount = document.getElementById('pay-btn-amount');
     const modalItemCount = document.getElementById('modal-item-count');
     const modalSubtotal = document.getElementById('modal-subtotal');
@@ -336,7 +296,6 @@
     if (modalSubtotal) modalSubtotal.textContent = `$${subtotal.toFixed(2)}`;
     if (modalTotal) modalTotal.textContent = `$${total.toFixed(2)}`;
 
-    // Discount handling
     if (state.discountAmount > 0 && discountRow) {
       discountRow.style.display = 'flex';
       if (discountCodeName) discountCodeName.textContent = state.appliedCoupon;
@@ -345,7 +304,6 @@
       discountRow.style.display = 'none';
     }
 
-    // Render cart items in drawer
     if (!container) return;
 
     if (state.cart.length === 0) {
@@ -374,7 +332,6 @@
         </div>
       `).join('');
 
-      // Attach drawer item actions
       container.querySelectorAll('[data-cart-action]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const action = e.currentTarget.getAttribute('data-cart-action');
@@ -386,7 +343,6 @@
       });
     }
 
-    // Render checkout modal item list summary
     const modalItemList = document.getElementById('modal-item-list');
     if (modalItemList) {
       modalItemList.innerHTML = state.cart.map(item => `
@@ -399,28 +355,8 @@
   }
 
   // =========================================================================
-  // 7. PAYMENT SIMULATION ENGINE & SCENARIOS
+  // 8. PAYMENT PROCESSING (TRIGGERS FAILURE / STUCK SCENARIOS DYNAMICALLY)
   // =========================================================================
-  function setScenario(scenarioKey) {
-    if (!SCENARIO_LABELS[scenarioKey]) return;
-    state.activeScenario = scenarioKey;
-
-    // Update Header Badge & Dock
-    const activeBadge = document.getElementById('active-scenario-name');
-    const dockTag = document.getElementById('dock-active-mode');
-    const scenarioName = SCENARIO_LABELS[scenarioKey];
-
-    if (activeBadge) activeBadge.textContent = `Mode: ${scenarioName}`;
-    if (dockTag) dockTag.textContent = scenarioName;
-
-    // Sync radio inputs in checkout modal
-    const radio = document.querySelector(`input[name="checkout-scenario"][value="${scenarioKey}"]`);
-    if (radio) radio.checked = true;
-
-    showToast(`Payment test mode set to: ${scenarioName}`, 'warning');
-    logEvent('INFO', `Payment simulation scenario changed to: ${scenarioName}`);
-  }
-
   function startPaymentFlow() {
     if (state.cart.length === 0) {
       showToast('Your bag is empty! Add items first.', 'error');
@@ -430,28 +366,31 @@
     const total = getCartTotal();
     const txnId = 'TXN_' + Math.random().toString(36).substring(2, 9).toUpperCase();
     
+    // Automatically pick next scenario from rotation so every payment attempt triggers one!
+    const scenario = PAYMENT_SCENARIOS[currentScenarioIndex];
+    currentScenarioIndex = (currentScenarioIndex + 1) % PAYMENT_SCENARIOS.length;
+
     state.currentTransaction = {
       id: txnId,
       amount: total,
       currency: 'USD',
       itemsCount: state.cart.length,
       method: state.paymentMethod,
-      scenario: state.activeScenario,
+      scenario: scenario,
       startedAt: new Date().toISOString(),
       status: 'INITIATED'
     };
 
-    logEvent('INFO', `Payment checkout started for $${total.toFixed(2)} via [${state.paymentMethod.toUpperCase()}]`, {
+    logEvent('INFO', `Payment started for $${total.toFixed(2)} via [${state.paymentMethod.toUpperCase()}]`, {
       transactionId: txnId,
-      scenario: state.activeScenario
+      scenario: scenario
     });
 
-    // Switch view to Processing
+    // Switch view to authentic Processing screen
     showPaymentView('processing');
     updateProcessingTimeline(1);
 
-    // Process based on selected scenario
-    executeScenario(state.activeScenario, txnId, total);
+    executeScenario(scenario, txnId, total);
   }
 
   function executeScenario(scenario, txnId, total) {
@@ -460,20 +399,20 @@
     const stuckBanner = document.getElementById('stuck-banner');
 
     if (stuckBanner) stuckBanner.style.display = 'none';
+    if (procTitle) procTitle.textContent = 'Connecting to Bank Gateway...';
+    if (procDesc) procDesc.textContent = 'Please do not refresh or close this window while we secure authorization.';
 
     if (scenario === 'stuck') {
-      // ⏳ SCENARIO 1: STUCK IN PENDING
+      // ⏳ SCENARIO 1: TRANSACTION GETS STUCK IN PENDING (NO BANK CALLBACK)
       setTimeout(() => {
         updateProcessingTimeline(2);
-        logEvent('WARN', `Gateway dispatching auth request to acquirer... Reference: ${txnId}`);
       }, 1200);
 
       setTimeout(() => {
         updateProcessingTimeline(3);
         if (procTitle) procTitle.textContent = 'Awaiting Settlement Confirmation...';
-        if (procDesc) procDesc.textContent = 'Issuing bank has not returned a callback response. Connection is hanging.';
+        if (procDesc) procDesc.textContent = 'The bank authorization response is taking longer than expected.';
         
-        // Show stuck alert banner
         if (stuckBanner) stuckBanner.style.display = 'block';
         const stuckTxnId = document.getElementById('stuck-txn-id');
         if (stuckTxnId) stuckTxnId.textContent = txnId;
@@ -481,65 +420,56 @@
         state.currentTransaction.status = 'PENDING_STUCK';
         state.currentTransaction.errorCode = 'ERR_GATEWAY_NO_CALLBACK';
 
-        // Start live stuck timer counter
-        state.stuckSeconds = 5;
+        state.stuckSeconds = 4;
         clearInterval(state.stuckTimerInterval);
         state.stuckTimerInterval = setInterval(() => {
           state.stuckSeconds++;
           const timerEl = document.getElementById('stuck-timer-counter');
-          if (timerEl) timerEl.textContent = `${state.stuckSeconds}s elapsed`;
+          if (timerEl) timerEl.textContent = `${state.stuckSeconds}s`;
         }, 1000);
 
-        logEvent('ERROR', `TRANSACTION STUCK IN PENDING STATE: No ACK from banking switch after ${state.stuckSeconds}s.`, {
+        logEvent('ERROR', `Transaction stuck in pending: No response from banking network.`, {
           transactionId: txnId,
-          status: 'PENDING_STUCK',
-          actionRequired: 'Automated reconciliation or manual webhook replay needed.'
+          status: 'PENDING_STUCK'
         });
 
-      }, 2500);
+      }, 2400);
 
     } else if (scenario === 'declined') {
       // 🛑 SCENARIO 2: CARD DECLINED (402)
-      setTimeout(() => updateProcessingTimeline(2), 800);
+      setTimeout(() => updateProcessingTimeline(2), 900);
       setTimeout(() => {
         state.currentTransaction.status = 'FAILED';
         state.currentTransaction.errorCode = 'ERR_CARD_DECLINED';
-        state.currentTransaction.httpStatus = 402;
 
         showPaymentView('failed');
         renderFailedDetails(
           'ERR_CARD_DECLINED',
-          'Card issuer declined the transaction (Insufficient funds or risk security rules).',
+          'Card issuer declined the transaction. Please check card balance or try another method.',
           txnId
         );
 
-        logEvent('ERROR', `Payment Failed [402 Payment Required]: ERR_CARD_DECLINED`, {
-          transactionId: txnId,
-          declineCode: 'insufficient_funds'
-        });
+        logEvent('ERROR', `Payment Failed: ERR_CARD_DECLINED`, { transactionId: txnId });
       }, 2000);
 
     } else if (scenario === 'timeout') {
       // ⏱️ SCENARIO 3: 504 GATEWAY TIMEOUT
-      if (procTitle) procTitle.textContent = 'Negotiating with Remote Banking Node...';
+      if (procTitle) procTitle.textContent = 'Contacting Payment Gateway...';
       setTimeout(() => updateProcessingTimeline(2), 1500);
 
       setTimeout(() => {
         state.currentTransaction.status = 'FAILED';
         state.currentTransaction.errorCode = 'ERR_GATEWAY_TIMEOUT';
-        state.currentTransaction.httpStatus = 504;
 
         showPaymentView('failed');
         renderFailedDetails(
-          'ERR_GATEWAY_TIMEOUT (HTTP 504)',
-          'Bank gateway upstream timed out after 5000ms. No confirmation was received.',
+          'ERR_GATEWAY_TIMEOUT (504)',
+          'The bank gateway server timed out before completing authorization. Please try again.',
           txnId
         );
 
-        logEvent('ERROR', `Payment Timed Out [504 Gateway Timeout]: Upstream gateway unresponsive`, {
-          transactionId: txnId
-        });
-      }, 4500);
+        logEvent('ERROR', `Payment Timed Out: ERR_GATEWAY_TIMEOUT`, { transactionId: txnId });
+      }, 4000);
 
     } else if (scenario === 'auth_fail') {
       // 🔒 SCENARIO 4: 3DS / OTP FAILED
@@ -547,40 +477,16 @@
       setTimeout(() => {
         state.currentTransaction.status = 'FAILED';
         state.currentTransaction.errorCode = 'ERR_3DS_AUTH_FAILED';
-        state.currentTransaction.httpStatus = 403;
 
         showPaymentView('failed');
         renderFailedDetails(
           'ERR_3DS_AUTH_FAILED',
-          'Customer 3D Secure / OTP authentication failed or challenge expired.',
+          'Customer 3D Secure / OTP verification failed or session expired.',
           txnId
         );
 
-        logEvent('ERROR', `Payment Authentication Failure: ERR_3DS_AUTH_FAILED`, {
-          transactionId: txnId
-        });
+        logEvent('ERROR', `Payment Authentication Failure: ERR_3DS_AUTH_FAILED`, { transactionId: txnId });
       }, 2200);
-
-    } else if (scenario === 'success') {
-      // ✅ SCENARIO 5: SUCCESSFUL PAYMENT
-      setTimeout(() => updateProcessingTimeline(2), 800);
-      setTimeout(() => updateProcessingTimeline(3), 1600);
-      setTimeout(() => {
-        state.currentTransaction.status = 'COMPLETED';
-        state.currentTransaction.httpStatus = 200;
-
-        showPaymentView('success');
-        renderSuccessDetails(txnId, total);
-
-        logEvent('SUCCESS', `Payment Authorized Successfully! Txn: ${txnId}, Amount: $${total.toFixed(2)}`, {
-          transactionId: txnId,
-          status: 'PAID'
-        });
-
-        // Clear cart on success
-        state.cart = [];
-        updateCartUI();
-      }, 2500);
     }
   }
 
@@ -602,7 +508,6 @@
   }
 
   function showPaymentView(viewName) {
-    // viewName: 'form' | 'processing' | 'failed' | 'success'
     const formView = document.getElementById('checkout-form-view');
     const procView = document.getElementById('payment-processing-view');
     const failView = document.getElementById('payment-failed-view');
@@ -650,11 +555,10 @@
 
   /**
    * Solution Demonstration Hook:
-   * Programmatically resolves a stuck transaction to simulate external recovery!
+   * Programmatically resolves a stuck transaction when checking status or testing recovery!
    */
   function resolveStuckPayment(outcome = 'success') {
     if (!state.currentTransaction || state.currentTransaction.status !== 'PENDING_STUCK') {
-      showToast('No transaction currently stuck in pending!', 'warning');
       return;
     }
 
@@ -663,34 +567,28 @@
     const total = state.currentTransaction.amount;
 
     if (outcome === 'success') {
-      logEvent('SUCCESS', `[RECOVERY SOLUTION TRIGGERED]: Stuck transaction ${txnId} reconciled via Bank Webhook -> Marked PAID`, {
-        transactionId: txnId,
-        resolvedBy: 'Demo Recovery Worker'
+      logEvent('SUCCESS', `[RECONCILIATION COMPLETED]: Stuck transaction ${txnId} marked PAID`, {
+        transactionId: txnId
       });
       state.currentTransaction.status = 'COMPLETED';
       showPaymentView('success');
       renderSuccessDetails(txnId, total);
       state.cart = [];
       updateCartUI();
-      showToast('Solution reconciled: Transaction marked PAID!', 'success');
+      showToast('Payment verified successfully!', 'success');
     } else {
-      logEvent('ERROR', `[RECOVERY SOLUTION TRIGGERED]: Stuck transaction ${txnId} expired -> Auto-canceled & released hold`, {
-        transactionId: txnId,
-        resolvedBy: 'Demo Recovery Worker'
-      });
       state.currentTransaction.status = 'CANCELED';
       showPaymentView('failed');
       renderFailedDetails(
-        'STATUS_AUTO_CANCELED',
-        'Stuck transaction timed out and was gracefully canceled by the recovery engine.',
+        'STATUS_CANCELED',
+        'Transaction expired or was cancelled by user.',
         txnId
       );
-      showToast('Solution auto-canceled stuck transaction.', 'warning');
     }
   }
 
   // =========================================================================
-  // 8. EVENT LISTENERS & MODAL BINDINGS
+  // 9. EVENT LISTENERS
   // =========================================================================
   function initEventListeners() {
     // Category Filter Chips
@@ -731,7 +629,7 @@
       });
     }
 
-    // Quick Add Sample Outfit
+    // Quick Add Complete Outfit
     const quickAddBtn = document.getElementById('quick-demo-add-btn');
     if (quickAddBtn) {
       quickAddBtn.addEventListener('click', () => {
@@ -747,13 +645,13 @@
     if (applyCouponBtn && couponInput) {
       applyCouponBtn.addEventListener('click', () => {
         const code = couponInput.value.trim().toUpperCase();
-        if (code === 'DEMO10' || code === 'SAVE10') {
+        if (code === 'AURA10' || code === 'SAVE10') {
           state.appliedCoupon = code;
           state.discountAmount = 15.00;
           updateCartUI();
           showToast(`Coupon ${code} applied (-$15.00)!`, 'success');
         } else {
-          showToast('Invalid coupon. Try "DEMO10"', 'error');
+          showToast('Invalid coupon. Try "AURA10"', 'error');
         }
       });
     }
@@ -766,7 +664,7 @@
     function toggleCheckout(open) {
       if (open) {
         if (state.cart.length === 0) {
-          showToast('Please add items to your cart first!', 'warning');
+          showToast('Please add items to your bag first!', 'warning');
           return;
         }
         toggleCart(false);
@@ -781,7 +679,7 @@
     if (proceedBtn) proceedBtn.addEventListener('click', () => toggleCheckout(true));
     if (checkoutModalClose) checkoutModalClose.addEventListener('click', () => toggleCheckout(false));
 
-    // Payment Method Tabs in Modal
+    // Payment Method Tabs
     document.querySelectorAll('.payment-tab').forEach(tab => {
       tab.addEventListener('click', (e) => {
         document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
@@ -798,33 +696,15 @@
       });
     });
 
-    // Radio Scenario Selector inside Checkout Form
-    document.querySelectorAll('input[name="checkout-scenario"]').forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        setScenario(e.target.value);
-      });
-    });
-
-    // Scenario Cards in Guide section
-    document.querySelectorAll('.select-scenario-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const sc = e.currentTarget.getAttribute('data-set-scenario');
-        setScenario(sc);
-        toggleCheckout(true);
-      });
-    });
-
     // Pay Now Submit Button
     const payNowBtn = document.getElementById('pay-now-button');
     if (payNowBtn) payNowBtn.addEventListener('click', startPaymentFlow);
 
     // Stuck Actions Buttons
     const resolveSuccessBtn = document.getElementById('sim-force-resolve-success-btn');
-    const resolveFailBtn = document.getElementById('sim-force-resolve-fail-btn');
     const cancelStuckBtn = document.getElementById('cancel-stuck-btn');
 
     if (resolveSuccessBtn) resolveSuccessBtn.addEventListener('click', () => resolveStuckPayment('success'));
-    if (resolveFailBtn) resolveFailBtn.addEventListener('click', () => resolveStuckPayment('cancel'));
     if (cancelStuckBtn) cancelStuckBtn.addEventListener('click', () => showPaymentView('form'));
 
     // Failed Actions Buttons
@@ -834,100 +714,27 @@
     if (retryPaymentBtn) retryPaymentBtn.addEventListener('click', startPaymentFlow);
     if (changeMethodBtn) changeMethodBtn.addEventListener('click', () => showPaymentView('form'));
 
-    // Success Actions
+    // Success Action
     const successContinueBtn = document.getElementById('success-continue-shopping-btn');
-    const successTestAnotherBtn = document.getElementById('success-test-another-btn');
-
     if (successContinueBtn) {
       successContinueBtn.addEventListener('click', () => {
         toggleCheckout(false);
       });
     }
-    if (successTestAnotherBtn) {
-      successTestAnotherBtn.addEventListener('click', () => {
-        // Quick add an item back so they can run another test
-        addToCart('prod_shirt_02');
-        showPaymentView('form');
-      });
-    }
-
-    // Diagnostics / Console Modal
-    const dockToggleBtn = document.getElementById('dock-toggle-btn');
-    const dockConsoleBtn = document.getElementById('dock-console-btn');
-    const openControlPanelBtn = document.getElementById('open-control-panel-btn');
-    const openEventLogBtn = document.getElementById('open-event-log-btn');
-    const consoleOverlay = document.getElementById('console-modal-overlay');
-    const consoleClose = document.getElementById('console-modal-close');
-    const clearLogsBtn = document.getElementById('clear-logs-btn');
-    const copyLogsBtn = document.getElementById('copy-logs-btn');
-
-    function toggleConsole(open) {
-      if (open) {
-        consoleOverlay.classList.add('active');
-        renderLogs();
-      } else {
-        consoleOverlay.classList.remove('active');
-      }
-    }
-
-    if (dockConsoleBtn) dockConsoleBtn.addEventListener('click', () => toggleConsole(true));
-    if (openEventLogBtn) openEventLogBtn.addEventListener('click', () => toggleConsole(true));
-    if (consoleClose) consoleClose.addEventListener('click', () => toggleConsole(false));
-    if (consoleOverlay) {
-      consoleOverlay.addEventListener('click', (e) => {
-        if (e.target === consoleOverlay) toggleConsole(false);
-      });
-    }
-
-    if (dockToggleBtn || openControlPanelBtn) {
-      const handler = () => {
-        const guideEl = document.getElementById('simulator-guide');
-        if (guideEl) guideEl.scrollIntoView({ behavior: 'smooth' });
-      };
-      if (dockToggleBtn) dockToggleBtn.addEventListener('click', handler);
-      if (openControlPanelBtn) openControlPanelBtn.addEventListener('click', handler);
-    }
-
-    if (clearLogsBtn) {
-      clearLogsBtn.addEventListener('click', () => {
-        state.logs = [];
-        renderLogs();
-        showToast('Console logs cleared.');
-      });
-    }
-
-    if (copyLogsBtn) {
-      copyLogsBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(JSON.stringify(state.logs, null, 2))
-          .then(() => showToast('Logs copied to clipboard as JSON!', 'success'))
-          .catch(() => showToast('Failed to copy to clipboard', 'error'));
-      });
-    }
   }
 
-  // =========================================================================
-  // 9. EXPOSE PUBLIC TESTBED API TO WINDOW
-  // =========================================================================
+  // Expose API for external recovery solutions/scripts if needed
   window.PaymentDemoGateway = {
-    setScenario,
     resolveStuckPayment,
     startPaymentFlow,
-    getLogs: () => [...state.logs],
     getCurrentTransaction: () => ({ ...state.currentTransaction }),
     getCart: () => [...state.cart]
   };
 
-  // =========================================================================
-  // 10. INITIALIZATION
-  // =========================================================================
   document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
     updateCartUI();
     initEventListeners();
-
-    // Initial system logs
-    logEvent('INFO', 'AURA Studio Payment Testbed Gateway Initialized.');
-    logEvent('INFO', `Default scenario configured: [${SCENARIO_LABELS[state.activeScenario]}]`);
   });
 
 })();

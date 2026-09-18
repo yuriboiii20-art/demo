@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA STUDIO | Luxury Minimalist Apparel & Payment Testbed</title>
-  <meta name="description" content="AURA STUDIO - Luxury minimalist clothing shop featuring an interactive payment simulation and failure recovery testing environment.">
+  <title>AURA STUDIO | Luxury Minimalist Apparel</title>
+  <meta name="description" content="AURA STUDIO - Luxury minimalist clothing shop featuring curated heavyweight textiles and Japanese tailored streetwear.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,12 +15,11 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <aside class="announcement-bar" role="region" aria-label="Demo Announcement">
+  <!-- Top E-Commerce Announcement Bar -->
+  <aside class="announcement-bar" role="region" aria-label="Store Announcement">
     <div class="announcement-content">
       <span class="pulse-dot"></span>
-      <span><strong>DEMO PAYMENT TESTBED:</strong> Interactive sandbox for testing failed, stuck, and timed-out payment workflows.</span>
-      <button class="pill-btn-sm" id="open-control-panel-btn" type="button">⚙️ Payment Simulator Settings</button>
+      <span>COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING ON ORDERS OVER $100 · 30-DAY FREE RETURNS</span>
     </div>
   </aside>
 
@@ -35,15 +34,10 @@
       <nav class="nav-menu" aria-label="Main Navigation">
         <a href="#catalog" class="nav-link active">Collection</a>
         <a href="#about" class="nav-link">About Studio</a>
-        <a href="#simulator-guide" class="nav-link">Simulator Docs</a>
+        <a href="#values" class="nav-link">Craftsmanship</a>
       </nav>
 
       <div class="header-actions">
-        <div class="scenario-badge" id="current-scenario-badge" title="Current Payment Test Scenario">
-          <span class="scenario-dot"></span>
-          <span class="scenario-label" id="active-scenario-name">Mode: Stuck in Pending</span>
-        </div>
-
         <button class="cart-trigger-btn" id="cart-trigger-btn" aria-label="Open Shopping Cart" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -64,7 +58,7 @@
           <div class="hero-tag">A/W 2026 CAPSULE COLLECTION</div>
           <h1 class="hero-title">Timeless Garments.<br><span class="gradient-text">Engineered For Motion.</span></h1>
           <p class="hero-desc">
-            Explore curated heavyweight textiles, Japanese tailored trousers, and functional streetwear. Test the complete shopping journey with our built-in payment failure and stuck transaction engine.
+            Explore curated heavyweight textiles, Japanese tailored trousers, and functional luxury streetwear designed for lasting comfort and refined minimalism.
           </p>
           <div class="hero-cta-group">
             <a href="#catalog" class="btn btn-primary">
@@ -72,7 +66,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <button class="btn btn-secondary" id="quick-demo-add-btn" type="button">
-              <span>⚡ Quick Add Sample Outfit</span>
+              <span>⚡ Quick Add Complete Outfit</span>
             </button>
           </div>
         </div>
@@ -95,7 +89,7 @@
         <div class="section-header-flex">
           <div>
             <h2 class="section-title">Curated Wardrobe</h2>
-            <p class="section-subtitle">Select garments to build your order and simulate real checkout scenarios.</p>
+            <p class="section-subtitle">Premium materials, bespoke tailored fits, and everyday luxury.</p>
           </div>
 
           <div class="category-filters" role="tablist">
@@ -114,52 +108,41 @@
       </div>
     </section>
 
-    <!-- Payment Simulator Feature Showcase -->
-    <section class="simulator-guide-section" id="simulator-guide">
+    <!-- Brand Values & Craftsmanship Section -->
+    <section class="values-section" id="values">
       <div class="container">
-        <div class="card-glass guide-card">
-          <div class="guide-header">
-            <div class="guide-badge">SIMULATION ENGINE CAPABILITIES</div>
-            <h2 class="guide-title">Designed to Test Payment Failures &amp; Stuck Recovery</h2>
-            <p class="guide-desc">
-              When building payment recovery tools, webhooks, or automated reconciliation systems, you need reliable failure scenarios. This demo reproduces the most frustrating real-world payment states:
+        <div class="card-glass values-card">
+          <div class="values-header">
+            <div class="values-badge">CRAFT &amp; INTEGRITY</div>
+            <h2 class="values-title">Designed for Longevity</h2>
+            <p class="values-desc">
+              Every garment in our collection is precision-engineered using sustainably sourced cottons, double-stitched seams, and bespoke hardware.
             </p>
           </div>
 
-          <div class="scenario-grid">
-            <div class="scenario-card" data-scenario="stuck">
-              <div class="scenario-icon warning-icon">⏳</div>
-              <h3>Stuck in Pending / Hang</h3>
-              <p>Simulates an acquirer network freeze where payment stays in <code>PENDING</code> indefinitely without webhook response.</p>
-              <button class="pill-btn-sm select-scenario-btn" data-set-scenario="stuck">Select This Mode</button>
+          <div class="values-grid">
+            <div class="value-item">
+              <div class="value-icon">🧵</div>
+              <h3>500 GSM French Terry</h3>
+              <p>Heavyweight cotton spun in Portugal for unmatched drape, structure, and thermal insulation.</p>
             </div>
 
-            <div class="scenario-card" data-scenario="declined">
-              <div class="scenario-icon danger-icon">🛑</div>
-              <h3>Card Declined / 402</h3>
-              <p>Simulates insufficient funds or high-risk block throwing an immediate <code>ERR_CARD_DECLINED</code> response.</p>
-              <button class="pill-btn-sm select-scenario-btn" data-set-scenario="declined">Select This Mode</button>
+            <div class="value-item">
+              <div class="value-icon">🌿</div>
+              <h3>Organic &amp; Sustainable</h3>
+              <p>100% GOTS-certified organic fibers treated with non-toxic botanical dyes.</p>
             </div>
 
-            <div class="scenario-card" data-scenario="timeout">
-              <div class="scenario-icon alert-icon">⏱️</div>
-              <h3>Bank Gateway 504 Timeout</h3>
-              <p>Simulates a slow bank server that hangs for 8 seconds before dropping connection with <code>ERR_GATEWAY_TIMEOUT</code>.</p>
-              <button class="pill-btn-sm select-scenario-btn" data-set-scenario="timeout">Select This Mode</button>
+            <div class="value-item">
+              <div class="value-icon">🛡️</div>
+              <h3>Lifetime Stitch Warranty</h3>
+              <p>Reinforced double-needle construction built to withstand years of daily wear.</p>
             </div>
 
-            <div class="scenario-card" data-scenario="auth_fail">
-              <div class="scenario-icon auth-icon">🔒</div>
-              <h3>3DS / OTP Verification Failed</h3>
-              <p>Simulates 3D Secure / OTP verification failure or two-factor session expiration during bank redirect.</p>
-              <button class="pill-btn-sm select-scenario-btn" data-set-scenario="auth_fail">Select This Mode</button>
-            </div>
-
-            <div class="scenario-card" data-scenario="success">
-              <div class="scenario-icon success-icon">✅</div>
-              <h3>Payment Authorized (Success)</h3>
-              <p>Standard successful <code>200 OK</code> authorized payment to compare normal vs edge-case checkout flows.</p>
-              <button class="pill-btn-sm select-scenario-btn" data-set-scenario="success">Select This Mode</button>
+            <div class="value-item">
+              <div class="value-icon">📦</div>
+              <h3>Carbon-Neutral Delivery</h3>
+              <p>Fast worldwide shipping in 100% biodegradable and recyclable packaging.</p>
             </div>
           </div>
         </div>
@@ -175,11 +158,10 @@
           <span class="logo-symbol">▲</span>
           <span class="logo-text">AURA STUDIO</span>
         </div>
-        <p class="footer-text">Minimalist apparel store designed with an integrated payment failure simulation workbench.</p>
+        <p class="footer-text">Luxury minimalist apparel atelier. Timeless cuts engineered for modern life.</p>
       </div>
       <div class="footer-meta">
-        <span class="demo-tag">DEMO ENVIRONMENT</span>
-        <p>© 2026 AURA STUDIO Apparel. Built for Payment Recovery &amp; Resilience Testing.</p>
+        <p>© 2026 AURA STUDIO Apparel. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -202,14 +184,14 @@
       <div class="empty-cart-state" id="empty-cart-state">
         <div class="empty-icon">🛍️</div>
         <h3>Your shopping bag is empty</h3>
-        <p>Add some garments from our capsule collection to test the checkout.</p>
+        <p>Add some garments from our capsule collection to begin.</p>
         <button class="btn btn-secondary" id="empty-cart-explore-btn">Browse Collection</button>
       </div>
     </div>
 
     <div class="drawer-footer" id="cart-footer">
       <div class="promo-box">
-        <input type="text" id="coupon-input" placeholder="Promo code (e.g. DEMO10)" class="form-input-sm">
+        <input type="text" id="coupon-input" placeholder="Promo code (e.g. AURA10)" class="form-input-sm">
         <button class="btn-sm btn-secondary" id="apply-coupon-btn" type="button">Apply</button>
       </div>
 
@@ -247,7 +229,7 @@
       <div class="modal-header">
         <div class="brand-badge-mini">
           <span class="logo-symbol">▲</span>
-          <span>AURA PAY SECURE GATEWAY</span>
+          <span>AURA PAY · ENCRYPTED CHECKOUT</span>
         </div>
         <button class="modal-close-btn" id="checkout-modal-close" aria-label="Close Checkout Modal" type="button">✕</button>
       </div>
@@ -279,6 +261,11 @@
               <input type="email" id="cust-email" class="form-input" required value="alex.mercer@example.com">
             </div>
 
+            <div class="form-group">
+              <label for="cust-address">Shipping Address</label>
+              <input type="text" id="cust-address" class="form-input" placeholder="742 Evergreen Terrace, Apt 4B" value="452 Broadway, Suite 8A, New York, NY">
+            </div>
+
             <div class="checkout-step-header" style="margin-top: 1.5rem;">
               <span class="step-num">2</span>
               <h3>Payment Method</h3>
@@ -292,7 +279,7 @@
               </button>
               <button type="button" class="payment-tab" data-method="upi">
                 <span class="tab-icon">⚡</span>
-                <span>UPI / QR Code</span>
+                <span>UPI / Instant</span>
               </button>
               <button type="button" class="payment-tab" data-method="bank">
                 <span class="tab-icon">🏛️</span>
@@ -327,10 +314,10 @@
               <div class="upi-box">
                 <div class="qr-mock">
                   <div class="qr-pattern"></div>
-                  <span class="qr-label">Scan with any UPI app</span>
+                  <span class="qr-label">Scan to Pay</span>
                 </div>
                 <div class="form-group" style="flex: 1; margin-bottom: 0;">
-                  <label for="upi-id">Or Enter UPI ID / VPA</label>
+                  <label for="upi-id">UPI ID / VPA</label>
                   <input type="text" id="upi-id" class="form-input" placeholder="username@bank" value="alex@okaxis">
                 </div>
               </div>
@@ -350,76 +337,11 @@
               </div>
             </div>
 
-            <!-- Payment Simulation Scenario Selector Inside Checkout -->
-            <div class="sim-selector-container">
-              <div class="sim-selector-header">
-                <span class="sim-badge">TEST SCENARIO CONTROLLER</span>
-                <span class="sim-note">Choose payment result:</span>
-              </div>
-
-              <div class="scenario-radio-grid">
-                <label class="scenario-radio-option">
-                  <input type="radio" name="checkout-scenario" value="stuck" checked>
-                  <span class="radio-card">
-                    <span class="radio-indicator">⏳</span>
-                    <span class="radio-text">
-                      <strong>Stuck in Pending</strong>
-                      <small>Transaction hangs, no confirmation</small>
-                    </span>
-                  </span>
-                </label>
-
-                <label class="scenario-radio-option">
-                  <input type="radio" name="checkout-scenario" value="declined">
-                  <span class="radio-card">
-                    <span class="radio-indicator">🛑</span>
-                    <span class="radio-text">
-                      <strong>Card Declined</strong>
-                      <small>Immediate 402 card error</small>
-                    </span>
-                  </span>
-                </label>
-
-                <label class="scenario-radio-option">
-                  <input type="radio" name="checkout-scenario" value="timeout">
-                  <span class="radio-card">
-                    <span class="radio-indicator">⏱️</span>
-                    <span class="radio-text">
-                      <strong>504 Gateway Timeout</strong>
-                      <small>Bank server timeout after delay</small>
-                    </span>
-                  </span>
-                </label>
-
-                <label class="scenario-radio-option">
-                  <input type="radio" name="checkout-scenario" value="auth_fail">
-                  <span class="radio-card">
-                    <span class="radio-indicator">🔒</span>
-                    <span class="radio-text">
-                      <strong>3DS / OTP Failed</strong>
-                      <small>Verification rejected by bank</small>
-                    </span>
-                  </span>
-                </label>
-
-                <label class="scenario-radio-option">
-                  <input type="radio" name="checkout-scenario" value="success">
-                  <span class="radio-card">
-                    <span class="radio-indicator">✅</span>
-                    <span class="radio-text">
-                      <strong>Payment Success</strong>
-                      <small>Authorized 200 OK</small>
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="modal-action-row">
+            <!-- Submit Button (Clean, Normal Payment Experience) -->
+            <div class="modal-action-row" style="margin-top: 1.5rem;">
               <button type="button" class="btn btn-primary btn-block btn-lg" id="pay-now-button">
                 <span class="lock-icon">🔒</span>
-                <span>Authorize Payment <span id="pay-btn-amount">$0.00</span></span>
+                <span>Complete Order &amp; Pay <span id="pay-btn-amount">$0.00</span></span>
               </button>
             </div>
           </form>
@@ -428,7 +350,7 @@
         <!-- Right Column: Order Summary Sidebar -->
         <div class="checkout-summary-col">
           <div class="sidebar-summary-card">
-            <h4 class="sidebar-title">Order Items (<span id="modal-item-count">0</span>)</h4>
+            <h4 class="sidebar-title">Order Summary (<span id="modal-item-count">0</span> items)</h4>
             <div class="modal-item-list" id="modal-item-list">
               <!-- Item list injected by JS -->
             </div>
@@ -453,8 +375,9 @@
             </div>
 
             <div class="trust-badge-box">
-              <div class="trust-item">🛡️ 256-bit Encrypted Mock Gateway</div>
-              <div class="trust-item">📡 Real-time Payment Event Dispatcher</div>
+              <div class="trust-item">🛡️ 256-bit Bank Grade SSL Encryption</div>
+              <div class="trust-item">🔒 Verified Visa / Mastercard 3D Secure</div>
+              <div class="trust-item">📦 30-Day Hassle-Free Returns</div>
             </div>
           </div>
         </div>
@@ -474,45 +397,40 @@
           <div class="progress-timeline">
             <div class="timeline-step step-done" id="step-1">
               <span class="step-bullet">✓</span>
-              <span class="step-text">Payload Encrypted</span>
+              <span class="step-text">Payment Details Encrypted</span>
             </div>
             <div class="timeline-step step-active" id="step-2">
               <span class="step-bullet">●</span>
-              <span class="step-text">Acquirer Network Handshake</span>
+              <span class="step-text">Contacting Issuing Bank Network</span>
             </div>
             <div class="timeline-step" id="step-3">
               <span class="step-bullet">○</span>
-              <span class="step-text">Awaiting Settlement Confirmation</span>
+              <span class="step-text">Awaiting Bank Authorization Response</span>
             </div>
           </div>
 
-          <!-- Stuck Notice (Visible when stuck in pending) -->
+          <!-- Realistic Stuck / Pending Notification -->
           <div class="stuck-alert-box" id="stuck-banner" style="display: none;">
             <div class="stuck-alert-header">
               <span class="pulse-warning-dot"></span>
-              <strong>TRANSACTION STATUS: PENDING / STUCK</strong>
+              <strong>PAYMENT IN PROGRESS (PENDING BANK ACKNOWLEDGEMENT)</strong>
             </div>
-            <p>The gateway sent the charge request to the issuing bank, but <strong>no confirmation callback or webhook was received</strong>. The payment is in a hanging state.</p>
+            <p>Your payment request was transmitted, but <strong>your bank's authorization response is delayed</strong>. The transaction is currently waiting for confirmation.</p>
             
             <div class="stuck-meta-card">
               <div><strong>Reference ID:</strong> <span class="font-mono" id="stuck-txn-id">TXN_STUCK_992104</span></div>
-              <div><strong>State:</strong> <span class="badge-pending">PAYMENT_PENDING_MERCHANT_ACK</span></div>
-              <div><strong>Elapsed Time:</strong> <span id="stuck-timer-counter" class="font-mono">14s</span></div>
+              <div><strong>Status:</strong> <span class="badge-pending">PAYMENT_PENDING</span></div>
+              <div><strong>Time Elapsed:</strong> <span id="stuck-timer-counter" class="font-mono">14s</span></div>
             </div>
 
-            <!-- Interactive Recovery Simulation for testing solutions -->
+            <!-- Customer Actions for Stuck State -->
             <div class="recovery-actions-panel">
-              <h4>🛠️ Solution Demonstration Hooks:</h4>
-              <p>Simulate how your recovery mechanism / polling worker resolves this hanging transaction:</p>
               <div class="recovery-btn-group">
                 <button class="btn btn-success-outline btn-sm" id="sim-force-resolve-success-btn">
-                  ✅ Simulate Solution Reconciled: Mark Paid
-                </button>
-                <button class="btn btn-danger-outline btn-sm" id="sim-force-resolve-fail-btn">
-                  ❌ Simulate Solution Expired: Auto-Cancel &amp; Refund
+                  🔄 Re-check Bank Status (Auto-Reconcile)
                 </button>
                 <button class="btn btn-secondary btn-sm" id="cancel-stuck-btn">
-                  Back to Checkout Form
+                  Return to Checkout &amp; Try Another Method
                 </button>
               </div>
             </div>
@@ -553,10 +471,7 @@
               <span>🔄 Retry Payment Now</span>
             </button>
             <button class="btn btn-secondary" id="change-payment-method-btn">
-              <span>Change Payment Method</span>
-            </button>
-            <button class="btn btn-ghost" id="open-event-log-btn">
-              <span>Inspect Gateway Event Log</span>
+              <span>Try Another Payment Method</span>
             </button>
           </div>
         </div>
@@ -589,67 +504,10 @@
             <button class="btn btn-primary" id="success-continue-shopping-btn">
               <span>Continue Shopping</span>
             </button>
-            <button class="btn btn-secondary" id="success-test-another-btn">
-              <span>Run Another Test Scenario</span>
-            </button>
           </div>
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ==================== DEVELOPER CONTROL PANEL & EVENT INSPECTOR ==================== -->
-  <div class="floating-demo-dock" id="floating-demo-dock">
-    <div class="dock-pill">
-      <button class="dock-btn" id="dock-toggle-btn" title="Toggle Demo Simulator Controls">
-        <span class="dock-icon">⚡</span>
-        <span class="dock-title">Payment Testbed</span>
-        <span class="dock-status-tag" id="dock-active-mode">Stuck in Pending</span>
-      </button>
-      <button class="dock-icon-btn" id="dock-console-btn" title="Open Event Diagnostics Console">
-        📋
-      </button>
-    </div>
-  </div>
-
-  <!-- Diagnostics & Log Inspector Modal -->
-  <div class="modal-overlay" id="console-modal-overlay" aria-hidden="true">
-    <div class="console-modal card-glass" role="dialog" aria-modal="true" aria-labelledby="console-modal-title">
-      <div class="modal-header">
-        <div class="brand-badge-mini">
-          <span class="logo-symbol">🔍</span>
-          <span id="console-modal-title">GATEWAY EVENT BUS &amp; DIAGNOSTIC LOGS</span>
-        </div>
-        <button class="modal-close-btn" id="console-modal-close" aria-label="Close Console Modal" type="button">✕</button>
-      </div>
-
-      <div class="console-body">
-        <div class="console-toolbar">
-          <span class="log-count" id="log-count">0 events logged</span>
-          <div class="console-btn-group">
-            <button class="btn-sm btn-secondary" id="clear-logs-btn">Clear Logs</button>
-            <button class="btn-sm btn-secondary" id="copy-logs-btn">Copy JSON</button>
-          </div>
-        </div>
-
-        <div class="console-log-feed" id="console-log-feed">
-          <!-- Logs dynamically injected -->
-        </div>
-
-        <div class="console-docs-box">
-          <h4>💡 How to hook your recovery solution into this demo:</h4>
-          <p>This demo emits window custom events that your external code can listen to:</p>
-          <pre class="code-snippet"><code>window.addEventListener('payment_event', (event) => {
-  const { status, transactionId, errorCode, amount } = event.detail;
-  console.log('Payment Event Received:', status, errorCode);
-  // Trigger your recovery webhook or auto-reconciliation engine here
-});
-
-// Or programmatically resolve a stuck payment:
-window.PaymentDemoGateway.resolveStuckPayment('success'); // or 'cancel'</code></pre>
-        </div>
-      </div>
     </div>
   </div>
 
