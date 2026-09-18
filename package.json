@@ -1,0 +1,19 @@
+{
+  "name": "aura-studio-demo",
+  "version": "1.0.0",
+  "description": "Clothing E-Commerce and Payment Failure Simulation Testbed",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build": "echo \"Static build ready in current directory.\""
+  },
+  "keywords": [
+    "ecommerce",
+    "clothing",
+    "payment-simulator",
+    "demo"
+  ],
+  "author": "Yuri",
+  "license": "MIT"
+}
