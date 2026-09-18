@@ -435,9 +435,10 @@
 
       setTimeout(() => {
         updateProcessingTimeline(3);
-        if (procTitle) procTitle.textContent = 'Awaiting Bank Confirmation...';
-        if (procDesc) procDesc.textContent = 'The bank authorization response is taking longer than expected.';
         
+        const loaderBox = document.getElementById('processing-loader-box');
+        if (loaderBox) loaderBox.style.display = 'none';
+
         if (stuckBanner) stuckBanner.style.display = 'block';
         
         // Populate Stuck View Details
@@ -555,9 +556,15 @@
     const procView = document.getElementById('payment-processing-view');
     const failView = document.getElementById('payment-failed-view');
     const succView = document.getElementById('payment-success-view');
+    const loaderBox = document.getElementById('processing-loader-box');
+    const stuckBanner = document.getElementById('stuck-banner');
 
     if (formView) formView.style.display = viewName === 'form' ? 'grid' : 'none';
-    if (procView) procView.style.display = viewName === 'processing' ? 'flex' : 'none';
+    if (procView) {
+      procView.style.display = viewName === 'processing' ? 'flex' : 'none';
+      if (loaderBox && viewName === 'processing') loaderBox.style.display = 'block';
+      if (stuckBanner && viewName === 'processing') stuckBanner.style.display = 'none';
+    }
     if (failView) failView.style.display = viewName === 'failed' ? 'flex' : 'none';
     if (succView) succView.style.display = viewName === 'success' ? 'flex' : 'none';
 
@@ -763,24 +770,28 @@
     if (retryPaymentBtn) retryPaymentBtn.addEventListener('click', startPaymentFlow);
     if (changeMethodBtn) changeMethodBtn.addEventListener('click', () => showPaymentView('form'));
 
-    if (copyTxnBtn) {
-      copyTxnBtn.addEventListener('click', () => {
-        if (!state.currentTransaction) return;
-        const info = `--- AURA STUDIO TRANSACTION AUDIT ---
+    function copyAuditData() {
+      if (!state.currentTransaction) return;
+      const info = `--- AURA STUDIO TRANSACTION AUDIT ---
 Transaction ID: ${state.currentTransaction.id}
-Bank Reference RRN: ${state.currentTransaction.rrn}
-Amount: ${formatINR(state.currentTransaction.amount)}
+Bank Reference (RRN): ${state.currentTransaction.rrn}
+Amount Attempted: ${formatINR(state.currentTransaction.amount)}
 Payment Method: ${state.currentTransaction.method}
 Timestamp: ${state.currentTransaction.startedAt}
-Error Code: ${state.currentTransaction.errorCode || 'N/A'}
-Retailer Helpline: 1800-2872-7883
+Status: ${state.currentTransaction.status}
+Error / Code: ${state.currentTransaction.errorCode || 'N/A'}
+Provider Helpline: 1800-2872-7883
 Support Email: support@aurastudio.in`;
 
-        navigator.clipboard.writeText(info)
-          .then(() => showToast('Transaction audit copied to clipboard!', 'success'))
-          .catch(() => showToast('Failed to copy', 'error'));
-      });
+      navigator.clipboard.writeText(info)
+        .then(() => showToast('Transaction record copied to clipboard!', 'success'))
+        .catch(() => showToast('Failed to copy', 'error'));
     }
+
+    if (copyTxnBtn) copyTxnBtn.addEventListener('click', copyAuditData);
+
+    const copyStuckBtn = document.getElementById('copy-stuck-details-btn');
+    if (copyStuckBtn) copyStuckBtn.addEventListener('click', copyAuditData);
 
     // Success Action
     const successContinueBtn = document.getElementById('success-continue-shopping-btn');

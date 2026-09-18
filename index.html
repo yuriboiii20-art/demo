@@ -225,16 +225,17 @@
   <div class="modal-overlay" id="checkout-modal-overlay" aria-hidden="true">
     <div class="checkout-modal card-glass" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
       
-      <!-- Modal Header -->
+      <!-- Sleek Modal Header -->
       <div class="modal-header">
         <div class="brand-badge-mini">
           <span class="logo-symbol">▲</span>
-          <span>AURA PAY · 256-BIT ENCRYPTED CHECKOUT</span>
+          <span class="brand-title-badge">AURA PAY</span>
+          <span class="badge-encryption-tag">🔒 256-Bit SSL Encrypted</span>
         </div>
         <button class="modal-close-btn" id="checkout-modal-close" aria-label="Close Checkout Modal" type="button">✕</button>
       </div>
 
-      <!-- Modal Body (Two-Column / Responsive Flow) -->
+      <!-- Modal Body (Checkout Form View) -->
       <div class="checkout-modal-body" id="checkout-form-view">
         
         <!-- Left Column: Customer & Payment Form -->
@@ -383,138 +384,159 @@
         </div>
       </div>
 
-      <!-- ================== DYNAMIC PAYMENT STATUS SCREENS ================== -->
+      <!-- ================== DYNAMIC PAYMENT STATUS SCREENS (HIGH-END FINTECH REDESIGN) ================== -->
 
-      <!-- 1. Processing / In-Progress Screen -->
+      <!-- 1. Processing & Stuck Status View -->
       <div class="payment-state-view" id="payment-processing-view" style="display: none;">
         <div class="state-container">
-          <div class="spinner-ring">
-            <div class="spinner-circle"></div>
-          </div>
-          <h2 class="state-title" id="processing-title">Connecting to Bank Gateway...</h2>
-          <p class="state-desc" id="processing-desc">Please do not refresh or close this window while we secure authorization.</p>
           
-          <div class="progress-timeline">
-            <div class="timeline-step step-done" id="step-1">
-              <span class="step-bullet">✓</span>
-              <span class="step-text">Payment Payload Encrypted</span>
+          <!-- Animated Spinner Section (shown while negotiating) -->
+          <div id="processing-loader-box" class="processing-loader-box">
+            <div class="fintech-spinner-wrap">
+              <div class="fintech-spinner"></div>
             </div>
-            <div class="timeline-step step-active" id="step-2">
-              <span class="step-bullet">●</span>
-              <span class="step-text">Contacting Issuing Bank Network</span>
-            </div>
-            <div class="timeline-step" id="step-3">
-              <span class="step-bullet">○</span>
-              <span class="step-text">Awaiting Bank Authorization Response</span>
+            <h2 class="state-title" id="processing-title">Connecting to Bank Gateway...</h2>
+            <p class="state-desc" id="processing-desc">Please do not refresh or close this window while we secure authorization.</p>
+            
+            <div class="progress-timeline">
+              <div class="timeline-step step-done" id="step-1">
+                <span class="step-bullet">✓</span>
+                <span class="step-text">Payment Payload Encrypted</span>
+              </div>
+              <div class="timeline-step step-active" id="step-2">
+                <span class="step-bullet">●</span>
+                <span class="step-text">Contacting Issuing Bank Network</span>
+              </div>
+              <div class="timeline-step" id="step-3">
+                <span class="step-bullet">○</span>
+                <span class="step-text">Awaiting Bank Authorization Response</span>
+              </div>
             </div>
           </div>
 
-          <!-- Realistic Stuck / Pending Notification -->
-          <div class="stuck-alert-box" id="stuck-banner" style="display: none;">
-            <div class="stuck-alert-header">
-              <span class="pulse-warning-dot"></span>
-              <strong>TRANSACTION STATUS: PENDING (STUCK AT ISSUING BANK)</strong>
-            </div>
-            <p>Your payment request was transmitted, but <strong>your bank's authorization response is delayed / unresponsive</strong>. The transaction is currently waiting for confirmation.</p>
+          <!-- Professional Stuck / Pending State (shown when bank takes too long) -->
+          <div class="stuck-state-wrapper" id="stuck-banner" style="display: none;">
             
-            <div class="error-details-card" style="margin-bottom: 1rem;">
-              <div class="error-meta-row">
-                <span class="error-label">Transaction ID:</span>
-                <span class="error-value font-mono" id="stuck-txn-id">TXN_STUCK_992104_INR</span>
+            <div class="status-badge-hero status-badge-warning">
+              <span class="pulse-warning-dot"></span>
+              <span class="hero-badge-title">TRANSACTION PENDING AT ISSUING BANK</span>
+              <span class="hero-badge-timer font-mono" id="stuck-timer-counter">14s</span>
+            </div>
+
+            <p class="stuck-lead-text">
+              Your payment request was transmitted, but <strong>your issuing bank has not returned a confirmation response</strong>. The payment is in a hanging state.
+            </p>
+
+            <!-- Clean Transaction Breakdown Sheet -->
+            <div class="audit-sheet-card">
+              <div class="audit-sheet-header">
+                <span>TRANSACTION AUDIT DETAILS</span>
+                <span class="badge-pending">PENDING_BANK_ACK</span>
               </div>
-              <div class="error-meta-row">
-                <span class="error-label">Amount Attempted:</span>
-                <span class="error-value font-mono text-warning" id="stuck-amount">₹0.00</span>
+              
+              <div class="audit-row">
+                <span class="audit-label">Transaction ID:</span>
+                <span class="audit-val font-mono text-primary" id="stuck-txn-id">TXN_STUCK_992104_INR</span>
               </div>
-              <div class="error-meta-row">
-                <span class="error-label">Bank Ref / RRN:</span>
-                <span class="error-value font-mono" id="stuck-rrn">RRN-9938210948</span>
+              <div class="audit-row">
+                <span class="audit-label">Amount Attempted:</span>
+                <span class="audit-val font-mono font-bold" id="stuck-amount">₹0.00</span>
               </div>
-              <div class="error-meta-row">
-                <span class="error-label">Payment Method:</span>
-                <span class="error-value" id="stuck-method">Card Payment</span>
+              <div class="audit-row">
+                <span class="audit-label">Payment Channel:</span>
+                <span class="audit-val" id="stuck-method">Card Payment</span>
               </div>
-              <div class="error-meta-row">
-                <span class="error-label">Status:</span>
-                <span class="badge-pending">PAYMENT_PENDING_MERCHANT_ACK</span>
+              <div class="audit-row">
+                <span class="audit-label">Bank Reference (RRN):</span>
+                <span class="audit-val font-mono" id="stuck-rrn">RRN-9938210948</span>
               </div>
-              <div class="error-meta-row">
-                <span class="error-label">Time Elapsed:</span>
-                <span id="stuck-timer-counter" class="font-mono">14s</span>
+              <div class="audit-row">
+                <span class="audit-label">Gateway Status:</span>
+                <span class="audit-val text-warning">Awaiting Merchant Webhook / Acquirer Callback</span>
               </div>
             </div>
 
-            <!-- Prominent Contact Callout for Stuck State -->
+            <!-- Prominent Retailer / Provider Notice Card -->
             <div class="retailer-contact-alert">
               <div class="retailer-alert-icon">⚠️</div>
               <div class="retailer-alert-body">
                 <strong class="retailer-alert-title">PLEASE CONTACT THE PROVIDER OR RETAILER</strong>
-                <p>If money was debited from your bank account or UPI handle, please contact our merchant support desk immediately with the Transaction ID above.</p>
-                <div class="retailer-contact-details">
-                  <span>📧 <strong>Support Email:</strong> support@aurastudio.in</span>
-                  <span>📞 <strong>Merchant Helpdesk:</strong> 1800-2872-7883 (Toll Free)</span>
+                <p>If money was debited from your bank account or UPI app, please reach out to our merchant helpdesk with your Transaction ID to initiate auto-reconciliation or immediate refund.</p>
+                <div class="retailer-contact-grid">
+                  <div class="contact-grid-item">
+                    <span class="contact-grid-label">Provider Email</span>
+                    <span class="contact-grid-val">support@aurastudio.in</span>
+                  </div>
+                  <div class="contact-grid-item">
+                    <span class="contact-grid-label">Toll-Free Support</span>
+                    <span class="contact-grid-val">1800-2872-7883</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Customer Actions for Stuck State -->
-            <div class="recovery-actions-panel" style="margin-top: 1rem;">
-              <div class="recovery-btn-group">
-                <button class="btn btn-success-outline btn-sm" id="sim-force-resolve-success-btn">
-                  🔄 Check Bank Status / Auto-Reconcile
-                </button>
-                <button class="btn btn-secondary btn-sm" id="cancel-stuck-btn">
-                  Return to Checkout &amp; Try Another Method
-                </button>
-              </div>
+            <!-- Customer Actions -->
+            <div class="status-action-buttons">
+              <button class="btn btn-success-outline btn-block" id="sim-force-resolve-success-btn">
+                <span>🔄 Re-check Bank Status (Auto-Reconcile)</span>
+              </button>
+              <button class="btn btn-secondary btn-block" id="cancel-stuck-btn">
+                <span>Return to Checkout &amp; Try Another Method</span>
+              </button>
+              <button class="btn btn-ghost btn-sm" id="copy-stuck-details-btn">
+                <span>📋 Copy Transaction Details for Support</span>
+              </button>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- 2. Failed / Error Screen -->
+      <!-- 2. Failed / Error Screen (Clean Fintech Redesign) -->
       <div class="payment-state-view" id="payment-failed-view" style="display: none;">
         <div class="state-container">
+          
           <div class="status-icon-circle status-failed">
             <span>✕</span>
           </div>
-          <h2 class="state-title text-danger" id="failed-title">Payment Unsuccessful</h2>
-          <p class="state-desc" id="failed-desc">We were unable to process your payment. Your account has not been debited.</p>
 
-          <!-- Comprehensive Transaction Details Card -->
-          <div class="error-details-card">
-            <div class="error-details-header">
-              <span>TRANSACTION BREAKDOWN &amp; AUDIT TRAIL</span>
+          <h2 class="state-title text-danger" id="failed-title">Payment Unsuccessful</h2>
+          <p class="state-desc" id="failed-desc">We were unable to complete this transaction. Your bank account has not been debited.</p>
+
+          <!-- Clean Transaction Breakdown Card -->
+          <div class="audit-sheet-card">
+            <div class="audit-sheet-header">
+              <span>TRANSACTION AUDIT SUMMARY</span>
               <span class="badge-danger">FAILED</span>
             </div>
             
-            <div class="error-meta-row">
-              <span class="error-label">Transaction ID:</span>
-              <span class="error-value font-mono text-primary" id="failed-txn-id">TXN_FAIL_883019_INR</span>
+            <div class="audit-row">
+              <span class="audit-label">Transaction ID:</span>
+              <span class="audit-val font-mono text-primary font-bold" id="failed-txn-id">TXN_FAIL_883019_INR</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Amount Attempted:</span>
-              <span class="error-value font-mono text-danger" id="failed-amount">₹0.00</span>
+            <div class="audit-row">
+              <span class="audit-label">Amount Attempted:</span>
+              <span class="audit-val font-mono font-bold text-danger" id="failed-amount">₹0.00</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Payment Channel:</span>
-              <span class="error-value" id="failed-method">Debit / Credit Card</span>
+            <div class="audit-row">
+              <span class="audit-label">Payment Channel:</span>
+              <span class="audit-val" id="failed-method">Debit / Credit Card</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Bank Gateway RRN:</span>
-              <span class="error-value font-mono" id="failed-rrn">RRN-783920194821</span>
+            <div class="audit-row">
+              <span class="audit-label">Bank Reference (RRN):</span>
+              <span class="audit-val font-mono" id="failed-rrn">RRN-783920194821</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Error Code:</span>
-              <span class="error-value font-mono text-danger" id="error-code-val">ERR_PAYMENT_DECLINED</span>
+            <div class="audit-row">
+              <span class="audit-label">Error Code:</span>
+              <span class="audit-val font-mono text-danger" id="error-code-val">ERR_PAYMENT_DECLINED</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Failure Reason:</span>
-              <span class="error-value" id="error-reason-val">Card issuer declined the transaction (Insufficient balance or high-risk lock).</span>
+            <div class="audit-row">
+              <span class="audit-label">Failure Reason:</span>
+              <span class="audit-val" id="error-reason-val">Card issuer declined the transaction (Insufficient balance or high-risk lock).</span>
             </div>
-            <div class="error-meta-row">
-              <span class="error-label">Timestamp:</span>
-              <span class="error-value font-mono" id="failed-timestamp">18 Sep 2026, 23:28:00 IST</span>
+            <div class="audit-row">
+              <span class="audit-label">Timestamp:</span>
+              <span class="audit-val font-mono" id="failed-timestamp">18 Sep 2026, 23:28:00 IST</span>
             </div>
           </div>
 
@@ -523,20 +545,26 @@
             <div class="retailer-alert-icon">📞</div>
             <div class="retailer-alert-body">
               <strong class="retailer-alert-title">PLEASE CONTACT THE PROVIDER OR RETAILER</strong>
-              <p>If amount was deducted from your account, it will be refunded within 3-5 business days. For urgent order confirmation or payment reconciliation, quote your <strong>Transaction ID</strong> to our dispute desk.</p>
-              <div class="retailer-contact-details">
-                <span>📧 <strong>Provider Email:</strong> support@aurastudio.in</span>
-                <span>📞 <strong>Retailer Support Hotline:</strong> 1800-2872-7883 (Toll-Free, 24x7)</span>
-                <span>🏢 <strong>Merchant Desk:</strong> AURA Studio Retail Payments Cell</span>
+              <p>If amount was deducted from your account, it will automatically reverse within 3-5 business days. For urgent order confirmation or payment reconciliation, quote your <strong>Transaction ID</strong> to our payments helpdesk.</p>
+              <div class="retailer-contact-grid">
+                <div class="contact-grid-item">
+                  <span class="contact-grid-label">Provider Email</span>
+                  <span class="contact-grid-val">support@aurastudio.in</span>
+                </div>
+                <div class="contact-grid-item">
+                  <span class="contact-grid-label">Retailer Support Hotline</span>
+                  <span class="contact-grid-val">1800-2872-7883 (24x7)</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="failed-actions-group">
-            <button class="btn btn-primary" id="retry-payment-btn">
+          <!-- Action Buttons -->
+          <div class="status-action-buttons">
+            <button class="btn btn-primary btn-block btn-lg" id="retry-payment-btn">
               <span>🔄 Retry Payment Now</span>
             </button>
-            <button class="btn btn-secondary" id="change-payment-method-btn">
+            <button class="btn btn-secondary btn-block" id="change-payment-method-btn">
               <span>Try Another Payment Method</span>
             </button>
             <button class="btn btn-ghost btn-sm" id="copy-txn-details-btn">
@@ -555,22 +583,26 @@
           <h2 class="state-title text-success">Order Confirmed!</h2>
           <p class="state-desc">Thank you for your purchase. We have received your payment and are preparing your order.</p>
 
-          <div class="success-receipt-card">
-            <div class="receipt-header">
-              <span>Receipt Ref: <strong class="font-mono" id="success-order-id">ORD-94821-INR</strong></span>
+          <div class="audit-sheet-card">
+            <div class="audit-sheet-header">
+              <span>OFFICIAL PAYMENT RECEIPT</span>
               <span class="badge-success">PAID</span>
             </div>
-            <div class="receipt-items-summary" id="receipt-items-summary">
+            <div class="audit-row">
+              <span class="audit-label">Receipt Ref:</span>
+              <span class="audit-val font-mono font-bold" id="success-order-id">ORD-94821-INR</span>
+            </div>
+            <div class="receipt-items-summary" id="receipt-items-summary" style="padding: 0.5rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); margin: 0.5rem 0;">
               <!-- Rendered items in Rupees -->
             </div>
-            <div class="receipt-total-row">
-              <span>Amount Paid</span>
-              <strong id="receipt-amount-paid">₹0.00</strong>
+            <div class="audit-row">
+              <span class="audit-label font-bold">Total Amount Paid:</span>
+              <span class="audit-val font-mono font-bold text-success" id="receipt-amount-paid" style="font-size: 1.1rem;">₹0.00</span>
             </div>
           </div>
 
-          <div class="success-actions-group">
-            <button class="btn btn-primary" id="success-continue-shopping-btn">
+          <div class="status-action-buttons" style="margin-top: 1.5rem;">
+            <button class="btn btn-primary btn-block btn-lg" id="success-continue-shopping-btn">
               <span>Continue Shopping</span>
             </button>
           </div>
