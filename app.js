@@ -1,19 +1,19 @@
 /**
- * AURA STUDIO - Luxury Apparel E-Commerce & Payment Engine
+ * AURA STUDIO - Luxury Apparel E-Commerce & Payment Engine (INR Edition)
  */
 
 (function () {
   'use strict';
 
   // =========================================================================
-  // 1. PRODUCT CATALOG DATA
+  // 1. PRODUCT CATALOG DATA (PRICES IN INDIAN RUPEES ₹)
   // =========================================================================
   const PRODUCTS = [
     {
       id: 'prod_hoodie_01',
       name: 'Heavyweight Boxy Hoodie',
       category: 'outerwear',
-      price: 85.00,
+      price: 2499.00,
       image: 'assets/images/hoodie.jpg',
       description: '500 GSM French Terry cotton with structured dropped shoulders and minimal seamless pocket.',
       sizes: ['S', 'M', 'L', 'XL'],
@@ -23,7 +23,7 @@
       id: 'prod_shirt_02',
       name: 'Relaxed Linen Overshirt',
       category: 'tops',
-      price: 68.00,
+      price: 1899.00,
       image: 'assets/images/linen_overshirt.jpg',
       description: 'Breathable olive flax linen garment-dyed for a soft natural drape. Dual chest utility pockets.',
       sizes: ['S', 'M', 'L', 'XL'],
@@ -33,7 +33,7 @@
       id: 'prod_pants_03',
       name: 'Tailored Pleated Trousers',
       category: 'bottoms',
-      price: 92.00,
+      price: 2999.00,
       image: 'assets/images/trousers.jpg',
       description: 'Charcoal wool blend with double forward pleats, tapered ankle cut, and hidden waist adjuster.',
       sizes: ['30', '32', '34', '36'],
@@ -43,7 +43,7 @@
       id: 'prod_tee_04',
       name: 'Sand Vintage Boxy Tee',
       category: 'tops',
-      price: 45.00,
+      price: 1299.00,
       image: 'assets/images/boxy_tee.jpg',
       description: '280 GSM combed organic cotton with reinforced rib collar and relaxed drape.',
       sizes: ['S', 'M', 'L', 'XL'],
@@ -53,7 +53,7 @@
       id: 'prod_denim_05',
       name: 'Indigo Worker Denim Jacket',
       category: 'outerwear',
-      price: 110.00,
+      price: 3499.00,
       image: 'assets/images/denim_jacket.jpg',
       description: '14oz selvedge denim treated with vintage wash. Triple stitched reinforced construction.',
       sizes: ['M', 'L', 'XL'],
@@ -63,7 +63,7 @@
       id: 'prod_tote_06',
       name: 'Matte Black Crossbody Tote',
       category: 'accessories',
-      price: 58.00,
+      price: 1599.00,
       image: 'assets/images/canvas_tote.jpg',
       description: 'Heavy duty duck canvas with matte black metal hardware and modular utility strap.',
       sizes: ['ONE SIZE'],
@@ -85,7 +85,7 @@
       {
         id: 'prod_hoodie_01',
         name: 'Heavyweight Boxy Hoodie',
-        price: 85.00,
+        price: 2499.00,
         image: 'assets/images/hoodie.jpg',
         size: 'L',
         qty: 1
@@ -93,7 +93,7 @@
       {
         id: 'prod_pants_03',
         name: 'Tailored Pleated Trousers',
-        price: 92.00,
+        price: 2999.00,
         image: 'assets/images/trousers.jpg',
         size: '32',
         qty: 1
@@ -107,6 +107,14 @@
     stuckTimerInterval: null,
     stuckSeconds: 0
   };
+
+  // Format Rupees with Indian Numbering
+  function formatINR(amount) {
+    return '₹' + Number(amount).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
 
   // =========================================================================
   // 4. EVENT EMITTER (FOR BACKEND/SOLUTIONS LISTENING)
@@ -171,7 +179,7 @@
         <div class="product-content">
           <div class="product-title-row">
             <h3 class="product-title">${escapeHtml(product.name)}</h3>
-            <span class="product-price">$${product.price.toFixed(2)}</span>
+            <span class="product-price">${formatINR(product.price)}</span>
           </div>
           <p class="product-desc">${escapeHtml(product.description)}</p>
           
@@ -282,24 +290,24 @@
     const subtotal = getCartSubtotal();
     const total = getCartTotal();
 
-    if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
-    if (btnPreviewEl) btnPreviewEl.textContent = `$${total.toFixed(2)}`;
+    if (subtotalEl) subtotalEl.textContent = formatINR(subtotal);
+    if (totalEl) totalEl.textContent = formatINR(total);
+    if (btnPreviewEl) btnPreviewEl.textContent = formatINR(total);
 
     const payBtnAmount = document.getElementById('pay-btn-amount');
     const modalItemCount = document.getElementById('modal-item-count');
     const modalSubtotal = document.getElementById('modal-subtotal');
     const modalTotal = document.getElementById('modal-total');
 
-    if (payBtnAmount) payBtnAmount.textContent = `$${total.toFixed(2)}`;
+    if (payBtnAmount) payBtnAmount.textContent = formatINR(total);
     if (modalItemCount) modalItemCount.textContent = totalItems;
-    if (modalSubtotal) modalSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-    if (modalTotal) modalTotal.textContent = `$${total.toFixed(2)}`;
+    if (modalSubtotal) modalSubtotal.textContent = formatINR(subtotal);
+    if (modalTotal) modalTotal.textContent = formatINR(total);
 
     if (state.discountAmount > 0 && discountRow) {
       discountRow.style.display = 'flex';
       if (discountCodeName) discountCodeName.textContent = state.appliedCoupon;
-      if (cartDiscountEl) cartDiscountEl.textContent = `-$${state.discountAmount.toFixed(2)}`;
+      if (cartDiscountEl) cartDiscountEl.textContent = `-${formatINR(state.discountAmount)}`;
     } else if (discountRow) {
       discountRow.style.display = 'none';
     }
@@ -325,7 +333,7 @@
                 <span class="qty-display">${item.qty}</span>
                 <button type="button" class="qty-btn" data-cart-action="inc" data-index="${idx}">+</button>
               </div>
-              <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+              <span class="cart-item-price">${formatINR(item.price * item.qty)}</span>
               <button type="button" class="cart-item-remove" data-cart-action="remove" data-index="${idx}">Remove</button>
             </div>
           </div>
@@ -348,7 +356,7 @@
       modalItemList.innerHTML = state.cart.map(item => `
         <div class="modal-item-row">
           <span class="modal-item-name">${item.qty}x ${escapeHtml(item.name)} (${item.size})</span>
-          <span>$${(item.price * item.qty).toFixed(2)}</span>
+          <span>${formatINR(item.price * item.qty)}</span>
         </div>
       `).join('');
     }
@@ -357,6 +365,21 @@
   // =========================================================================
   // 8. PAYMENT PROCESSING (TRIGGERS FAILURE / STUCK SCENARIOS DYNAMICALLY)
   // =========================================================================
+  function getReadablePaymentMethod() {
+    if (state.paymentMethod === 'card') {
+      const cardNum = document.getElementById('card-number')?.value.trim() || '4532';
+      const last4 = cardNum.slice(-4) || '6789';
+      return `Visa / RuPay Card (ending in ${last4})`;
+    }
+    if (state.paymentMethod === 'upi') {
+      const upiId = document.getElementById('upi-id')?.value.trim() || 'user@upi';
+      return `UPI (${upiId})`;
+    }
+    const bankSelect = document.getElementById('bank-select');
+    const bankName = bankSelect?.options[bankSelect.selectedIndex]?.text || 'Net Banking';
+    return `Net Banking (${bankName})`;
+  }
+
   function startPaymentFlow() {
     if (state.cart.length === 0) {
       showToast('Your bag is empty! Add items first.', 'error');
@@ -364,36 +387,38 @@
     }
 
     const total = getCartTotal();
-    const txnId = 'TXN_' + Math.random().toString(36).substring(2, 9).toUpperCase();
+    const txnId = 'TXN_' + Math.floor(1000000 + Math.random() * 9000000) + '_INR';
+    const mockRRN = 'RRN-' + Math.floor(100000000000 + Math.random() * 900000000000);
+    const methodStr = getReadablePaymentMethod();
     
-    // Automatically pick next scenario from rotation so every payment attempt triggers one!
+    // Pick next scenario from rotation so every payment attempt demonstrates a realistic failure/stuck state
     const scenario = PAYMENT_SCENARIOS[currentScenarioIndex];
     currentScenarioIndex = (currentScenarioIndex + 1) % PAYMENT_SCENARIOS.length;
 
     state.currentTransaction = {
       id: txnId,
+      rrn: mockRRN,
       amount: total,
-      currency: 'USD',
+      currency: 'INR',
       itemsCount: state.cart.length,
-      method: state.paymentMethod,
+      method: methodStr,
       scenario: scenario,
-      startedAt: new Date().toISOString(),
+      startedAt: new Date().toLocaleString('en-IN', { timeZoneName: 'short' }),
       status: 'INITIATED'
     };
 
-    logEvent('INFO', `Payment started for $${total.toFixed(2)} via [${state.paymentMethod.toUpperCase()}]`, {
+    logEvent('INFO', `Payment started for ${formatINR(total)} via [${methodStr}]`, {
       transactionId: txnId,
       scenario: scenario
     });
 
-    // Switch view to authentic Processing screen
     showPaymentView('processing');
     updateProcessingTimeline(1);
 
-    executeScenario(scenario, txnId, total);
+    executeScenario(scenario, txnId, mockRRN, total, methodStr);
   }
 
-  function executeScenario(scenario, txnId, total) {
+  function executeScenario(scenario, txnId, mockRRN, total, methodStr) {
     const procTitle = document.getElementById('processing-title');
     const procDesc = document.getElementById('processing-desc');
     const stuckBanner = document.getElementById('stuck-banner');
@@ -403,19 +428,28 @@
     if (procDesc) procDesc.textContent = 'Please do not refresh or close this window while we secure authorization.';
 
     if (scenario === 'stuck') {
-      // ⏳ SCENARIO 1: TRANSACTION GETS STUCK IN PENDING (NO BANK CALLBACK)
+      // ⏳ SCENARIO 1: TRANSACTION GETS STUCK IN PENDING
       setTimeout(() => {
         updateProcessingTimeline(2);
       }, 1200);
 
       setTimeout(() => {
         updateProcessingTimeline(3);
-        if (procTitle) procTitle.textContent = 'Awaiting Settlement Confirmation...';
+        if (procTitle) procTitle.textContent = 'Awaiting Bank Confirmation...';
         if (procDesc) procDesc.textContent = 'The bank authorization response is taking longer than expected.';
         
         if (stuckBanner) stuckBanner.style.display = 'block';
+        
+        // Populate Stuck View Details
         const stuckTxnId = document.getElementById('stuck-txn-id');
+        const stuckAmount = document.getElementById('stuck-amount');
+        const stuckRRN = document.getElementById('stuck-rrn');
+        const stuckMethod = document.getElementById('stuck-method');
+
         if (stuckTxnId) stuckTxnId.textContent = txnId;
+        if (stuckAmount) stuckAmount.textContent = formatINR(total);
+        if (stuckRRN) stuckRRN.textContent = mockRRN;
+        if (stuckMethod) stuckMethod.textContent = methodStr;
 
         state.currentTransaction.status = 'PENDING_STUCK';
         state.currentTransaction.errorCode = 'ERR_GATEWAY_NO_CALLBACK';
@@ -428,7 +462,7 @@
           if (timerEl) timerEl.textContent = `${state.stuckSeconds}s`;
         }, 1000);
 
-        logEvent('ERROR', `Transaction stuck in pending: No response from banking network.`, {
+        logEvent('ERROR', `Transaction stuck in pending state. Ref: ${txnId}`, {
           transactionId: txnId,
           status: 'PENDING_STUCK'
         });
@@ -444,9 +478,12 @@
 
         showPaymentView('failed');
         renderFailedDetails(
-          'ERR_CARD_DECLINED',
-          'Card issuer declined the transaction. Please check card balance or try another method.',
-          txnId
+          'ERR_CARD_DECLINED (402)',
+          'Card issuer declined the transaction (Insufficient balance or daily limit exceeded).',
+          txnId,
+          mockRRN,
+          total,
+          methodStr
         );
 
         logEvent('ERROR', `Payment Failed: ERR_CARD_DECLINED`, { transactionId: txnId });
@@ -454,7 +491,7 @@
 
     } else if (scenario === 'timeout') {
       // ⏱️ SCENARIO 3: 504 GATEWAY TIMEOUT
-      if (procTitle) procTitle.textContent = 'Contacting Payment Gateway...';
+      if (procTitle) procTitle.textContent = 'Communicating with Remote Bank Gateway...';
       setTimeout(() => updateProcessingTimeline(2), 1500);
 
       setTimeout(() => {
@@ -464,8 +501,11 @@
         showPaymentView('failed');
         renderFailedDetails(
           'ERR_GATEWAY_TIMEOUT (504)',
-          'The bank gateway server timed out before completing authorization. Please try again.',
-          txnId
+          'The issuing bank server timed out after 5000ms. Transaction was aborted.',
+          txnId,
+          mockRRN,
+          total,
+          methodStr
         );
 
         logEvent('ERROR', `Payment Timed Out: ERR_GATEWAY_TIMEOUT`, { transactionId: txnId });
@@ -481,8 +521,11 @@
         showPaymentView('failed');
         renderFailedDetails(
           'ERR_3DS_AUTH_FAILED',
-          'Customer 3D Secure / OTP verification failed or session expired.',
-          txnId
+          '3D Secure / OTP authentication challenge failed or expired.',
+          txnId,
+          mockRRN,
+          total,
+          methodStr
         );
 
         logEvent('ERROR', `Payment Authentication Failure: ERR_3DS_AUTH_FAILED`, { transactionId: txnId });
@@ -523,16 +566,22 @@
     }
   }
 
-  function renderFailedDetails(code, reason, txnId) {
+  function renderFailedDetails(code, reason, txnId, rrn, total, method) {
     const codeEl = document.getElementById('error-code-val');
     const reasonEl = document.getElementById('error-reason-val');
     const txnEl = document.getElementById('failed-txn-id');
+    const rrnEl = document.getElementById('failed-rrn');
+    const amountEl = document.getElementById('failed-amount');
+    const methodEl = document.getElementById('failed-method');
     const timeEl = document.getElementById('failed-timestamp');
 
     if (codeEl) codeEl.textContent = code;
     if (reasonEl) reasonEl.textContent = reason;
     if (txnEl) txnEl.textContent = txnId;
-    if (timeEl) timeEl.textContent = new Date().toLocaleString();
+    if (rrnEl) rrnEl.textContent = rrn;
+    if (amountEl) amountEl.textContent = formatINR(total);
+    if (methodEl) methodEl.textContent = method;
+    if (timeEl) timeEl.textContent = new Date().toLocaleString('en-IN', { timeZoneName: 'short' });
   }
 
   function renderSuccessDetails(txnId, total) {
@@ -541,22 +590,18 @@
     const itemsSummaryEl = document.getElementById('receipt-items-summary');
 
     if (orderIdEl) orderIdEl.textContent = `ORD-${txnId}`;
-    if (amountPaidEl) amountPaidEl.textContent = `$${total.toFixed(2)}`;
+    if (amountPaidEl) amountPaidEl.textContent = formatINR(total);
 
     if (itemsSummaryEl) {
       itemsSummaryEl.innerHTML = state.cart.map(item => `
         <div class="summary-row" style="margin-bottom: 0.35rem; font-size: 0.85rem;">
           <span>${item.qty}x ${escapeHtml(item.name)} (${item.size})</span>
-          <span>$${(item.price * item.qty).toFixed(2)}</span>
+          <span>${formatINR(item.price * item.qty)}</span>
         </div>
       `).join('');
     }
   }
 
-  /**
-   * Solution Demonstration Hook:
-   * Programmatically resolves a stuck transaction when checking status or testing recovery!
-   */
   function resolveStuckPayment(outcome = 'success') {
     if (!state.currentTransaction || state.currentTransaction.status !== 'PENDING_STUCK') {
       return;
@@ -582,7 +627,10 @@
       renderFailedDetails(
         'STATUS_CANCELED',
         'Transaction expired or was cancelled by user.',
-        txnId
+        txnId,
+        state.currentTransaction.rrn || 'RRN-0000000000',
+        total,
+        state.currentTransaction.method
       );
     }
   }
@@ -639,19 +687,19 @@
       });
     }
 
-    // Coupon Code Box
+    // Coupon Code Box (₹500 Discount)
     const applyCouponBtn = document.getElementById('apply-coupon-btn');
     const couponInput = document.getElementById('coupon-input');
     if (applyCouponBtn && couponInput) {
       applyCouponBtn.addEventListener('click', () => {
         const code = couponInput.value.trim().toUpperCase();
-        if (code === 'AURA10' || code === 'SAVE10') {
+        if (code === 'AURA500' || code === 'SAVE500' || code === 'AURA10') {
           state.appliedCoupon = code;
-          state.discountAmount = 15.00;
+          state.discountAmount = 500.00;
           updateCartUI();
-          showToast(`Coupon ${code} applied (-$15.00)!`, 'success');
+          showToast(`Coupon ${code} applied (-₹500.00)!`, 'success');
         } else {
-          showToast('Invalid coupon. Try "AURA10"', 'error');
+          showToast('Invalid coupon. Try "AURA500"', 'error');
         }
       });
     }
@@ -710,9 +758,29 @@
     // Failed Actions Buttons
     const retryPaymentBtn = document.getElementById('retry-payment-btn');
     const changeMethodBtn = document.getElementById('change-payment-method-btn');
+    const copyTxnBtn = document.getElementById('copy-txn-details-btn');
 
     if (retryPaymentBtn) retryPaymentBtn.addEventListener('click', startPaymentFlow);
     if (changeMethodBtn) changeMethodBtn.addEventListener('click', () => showPaymentView('form'));
+
+    if (copyTxnBtn) {
+      copyTxnBtn.addEventListener('click', () => {
+        if (!state.currentTransaction) return;
+        const info = `--- AURA STUDIO TRANSACTION AUDIT ---
+Transaction ID: ${state.currentTransaction.id}
+Bank Reference RRN: ${state.currentTransaction.rrn}
+Amount: ${formatINR(state.currentTransaction.amount)}
+Payment Method: ${state.currentTransaction.method}
+Timestamp: ${state.currentTransaction.startedAt}
+Error Code: ${state.currentTransaction.errorCode || 'N/A'}
+Retailer Helpline: 1800-2872-7883
+Support Email: support@aurastudio.in`;
+
+        navigator.clipboard.writeText(info)
+          .then(() => showToast('Transaction audit copied to clipboard!', 'success'))
+          .catch(() => showToast('Failed to copy', 'error'));
+      });
+    }
 
     // Success Action
     const successContinueBtn = document.getElementById('success-continue-shopping-btn');
@@ -723,7 +791,7 @@
     }
   }
 
-  // Expose API for external recovery solutions/scripts if needed
+  // Expose API for external recovery solutions
   window.PaymentDemoGateway = {
     resolveStuckPayment,
     startPaymentFlow,

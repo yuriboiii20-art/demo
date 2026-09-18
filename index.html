@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA STUDIO | Luxury Minimalist Apparel</title>
-  <meta name="description" content="AURA STUDIO - Luxury minimalist clothing shop featuring curated heavyweight textiles and Japanese tailored streetwear.">
+  <title>AURA STUDIO | Luxury Minimalist Apparel &amp; Payment Demo</title>
+  <meta name="description" content="AURA STUDIO - Luxury minimalist clothing shop featuring curated heavyweight textiles, Japanese tailored streetwear, and authentic payment simulation.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
   <aside class="announcement-bar" role="region" aria-label="Store Announcement">
     <div class="announcement-content">
       <span class="pulse-dot"></span>
-      <span>COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING ON ORDERS OVER $100 · 30-DAY FREE RETURNS</span>
+      <span>COMPLIMENTARY EXPRESS SHIPPING ON ORDERS OVER ₹1,999 · 30-DAY FREE RETURNS</span>
     </div>
   </aside>
 
@@ -76,7 +76,7 @@
             <img src="assets/images/hoodie.jpg" alt="AURA Studio Signature Hoodie" class="hero-main-img">
             <div class="hero-floating-tag">
               <span class="tag-title">Featured Drop</span>
-              <span class="tag-sub">Heavyweight Boxy Hoodie · $85.00</span>
+              <span class="tag-sub">Heavyweight Boxy Hoodie · ₹2,499.00</span>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
 
         <!-- Product Grid -->
         <div class="product-grid" id="product-grid">
-          <!-- Dynamically Rendered by app.js -->
+          <!-- Dynamically Rendered by app.js with Rupee Prices -->
         </div>
       </div>
     </section>
@@ -124,7 +124,7 @@
             <div class="value-item">
               <div class="value-icon">🧵</div>
               <h3>500 GSM French Terry</h3>
-              <p>Heavyweight cotton spun in Portugal for unmatched drape, structure, and thermal insulation.</p>
+              <p>Heavyweight cotton spun for unmatched drape, structure, and thermal insulation.</p>
             </div>
 
             <div class="value-item">
@@ -141,8 +141,8 @@
 
             <div class="value-item">
               <div class="value-icon">📦</div>
-              <h3>Carbon-Neutral Delivery</h3>
-              <p>Fast worldwide shipping in 100% biodegradable and recyclable packaging.</p>
+              <h3>Express Nationwide Delivery</h3>
+              <p>Complimentary express shipping across India in 100% recyclable packaging.</p>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@
         <p class="footer-text">Luxury minimalist apparel atelier. Timeless cuts engineered for modern life.</p>
       </div>
       <div class="footer-meta">
-        <p>© 2026 AURA STUDIO Apparel. All rights reserved.</p>
+        <p>© 2026 AURA STUDIO Apparel. All prices listed in Indian Rupees (₹ INR).</p>
       </div>
     </div>
   </footer>
@@ -191,18 +191,18 @@
 
     <div class="drawer-footer" id="cart-footer">
       <div class="promo-box">
-        <input type="text" id="coupon-input" placeholder="Promo code (e.g. AURA10)" class="form-input-sm">
+        <input type="text" id="coupon-input" placeholder="Promo code (e.g. AURA500)" class="form-input-sm">
         <button class="btn-sm btn-secondary" id="apply-coupon-btn" type="button">Apply</button>
       </div>
 
       <div class="summary-breakdown">
         <div class="summary-row">
           <span>Subtotal</span>
-          <span id="cart-subtotal">$0.00</span>
+          <span id="cart-subtotal">₹0.00</span>
         </div>
         <div class="summary-row" id="discount-row" style="display: none;">
           <span class="text-accent">Discount (<span id="discount-code-name"></span>)</span>
-          <span class="text-accent" id="cart-discount">-$0.00</span>
+          <span class="text-accent" id="cart-discount">-₹0.00</span>
         </div>
         <div class="summary-row">
           <span>Estimated Shipping</span>
@@ -210,13 +210,13 @@
         </div>
         <div class="summary-row summary-total">
           <span>Estimated Total</span>
-          <span id="cart-total">$0.00</span>
+          <span id="cart-total">₹0.00</span>
         </div>
       </div>
 
       <button class="btn btn-primary btn-block" id="proceed-checkout-btn" type="button">
         <span>Proceed to Checkout</span>
-        <span id="btn-total-preview">$0.00</span>
+        <span id="btn-total-preview">₹0.00</span>
       </button>
     </div>
   </aside>
@@ -229,7 +229,7 @@
       <div class="modal-header">
         <div class="brand-badge-mini">
           <span class="logo-symbol">▲</span>
-          <span>AURA PAY · ENCRYPTED CHECKOUT</span>
+          <span>AURA PAY · 256-BIT ENCRYPTED CHECKOUT</span>
         </div>
         <button class="modal-close-btn" id="checkout-modal-close" aria-label="Close Checkout Modal" type="button">✕</button>
       </div>
@@ -241,45 +241,45 @@
         <div class="checkout-main-col">
           <div class="checkout-step-header">
             <span class="step-num">1</span>
-            <h3>Customer &amp; Delivery</h3>
+            <h3>Customer &amp; Delivery Details</h3>
           </div>
 
           <form id="checkout-form" class="checkout-form" onsubmit="event.preventDefault();">
             <div class="form-row form-row-2">
               <div class="form-group">
                 <label for="cust-first-name">First Name</label>
-                <input type="text" id="cust-first-name" class="form-input" required value="Alex">
+                <input type="text" id="cust-first-name" class="form-input" required value="Rohan">
               </div>
               <div class="form-group">
                 <label for="cust-last-name">Last Name</label>
-                <input type="text" id="cust-last-name" class="form-input" required value="Mercer">
+                <input type="text" id="cust-last-name" class="form-input" required value="Sharma">
               </div>
             </div>
 
             <div class="form-group">
               <label for="cust-email">Email Address</label>
-              <input type="email" id="cust-email" class="form-input" required value="alex.mercer@example.com">
+              <input type="email" id="cust-email" class="form-input" required value="rohan.sharma@example.com">
             </div>
 
             <div class="form-group">
               <label for="cust-address">Shipping Address</label>
-              <input type="text" id="cust-address" class="form-input" placeholder="742 Evergreen Terrace, Apt 4B" value="452 Broadway, Suite 8A, New York, NY">
+              <input type="text" id="cust-address" class="form-input" placeholder="Flat 402, Skyline Residency, Bandra West" value="Flat 402, Skyline Residency, Bandra West, Mumbai, MH">
             </div>
 
             <div class="checkout-step-header" style="margin-top: 1.5rem;">
               <span class="step-num">2</span>
-              <h3>Payment Method</h3>
+              <h3>Select Payment Method</h3>
             </div>
 
             <!-- Payment Method Tabs -->
             <div class="payment-tabs" role="tablist">
               <button type="button" class="payment-tab active" data-method="card">
                 <span class="tab-icon">💳</span>
-                <span>Credit / Debit</span>
+                <span>Debit / Credit Card</span>
               </button>
               <button type="button" class="payment-tab" data-method="upi">
                 <span class="tab-icon">⚡</span>
-                <span>UPI / Instant</span>
+                <span>UPI / QR / GPay</span>
               </button>
               <button type="button" class="payment-tab" data-method="bank">
                 <span class="tab-icon">🏛️</span>
@@ -293,7 +293,7 @@
                 <label for="card-number">Card Number</label>
                 <div class="input-with-icon">
                   <input type="text" id="card-number" class="form-input font-mono" placeholder="4242 •••• •••• 4242" value="4532 8901 2345 6789">
-                  <span class="card-brand-tag">VISA</span>
+                  <span class="card-brand-tag">VISA / RUPAY</span>
                 </div>
               </div>
 
@@ -303,7 +303,7 @@
                   <input type="text" id="card-expiry" class="form-input font-mono" placeholder="MM/YY" value="09/28">
                 </div>
                 <div class="form-group">
-                  <label for="card-cvv">Security Code (CVV)</label>
+                  <label for="card-cvv">CVV Code</label>
                   <input type="password" id="card-cvv" class="form-input font-mono" placeholder="•••" maxlength="4" value="888">
                 </div>
               </div>
@@ -314,11 +314,11 @@
               <div class="upi-box">
                 <div class="qr-mock">
                   <div class="qr-pattern"></div>
-                  <span class="qr-label">Scan to Pay</span>
+                  <span class="qr-label">Scan UPI QR</span>
                 </div>
                 <div class="form-group" style="flex: 1; margin-bottom: 0;">
-                  <label for="upi-id">UPI ID / VPA</label>
-                  <input type="text" id="upi-id" class="form-input" placeholder="username@bank" value="alex@okaxis">
+                  <label for="upi-id">Enter UPI ID / VPA</label>
+                  <input type="text" id="upi-id" class="form-input" placeholder="username@okaxis" value="rohan@okaxis">
                 </div>
               </div>
             </div>
@@ -326,22 +326,22 @@
             <!-- Net Banking Panel -->
             <div class="payment-panel" id="bank-panel" style="display: none;">
               <div class="form-group">
-                <label for="bank-select">Select Your Bank</label>
+                <label for="bank-select">Select Bank</label>
                 <select id="bank-select" class="form-input">
-                  <option value="chase">Chase / JPMorgan</option>
-                  <option value="bofa">Bank of America</option>
-                  <option value="citi">Citigroup</option>
-                  <option value="wells">Wells Fargo</option>
-                  <option value="hsb">HSBC Global</option>
+                  <option value="hdfc">HDFC Bank</option>
+                  <option value="icici">ICICI Bank</option>
+                  <option value="sbi">State Bank of India (SBI)</option>
+                  <option value="axis">Axis Bank</option>
+                  <option value="kotak">Kotak Mahindra Bank</option>
                 </select>
               </div>
             </div>
 
-            <!-- Submit Button (Clean, Normal Payment Experience) -->
+            <!-- Submit Button -->
             <div class="modal-action-row" style="margin-top: 1.5rem;">
               <button type="button" class="btn btn-primary btn-block btn-lg" id="pay-now-button">
                 <span class="lock-icon">🔒</span>
-                <span>Complete Order &amp; Pay <span id="pay-btn-amount">$0.00</span></span>
+                <span>Complete Order &amp; Pay <span id="pay-btn-amount">₹0.00</span></span>
               </button>
             </div>
           </form>
@@ -352,17 +352,17 @@
           <div class="sidebar-summary-card">
             <h4 class="sidebar-title">Order Summary (<span id="modal-item-count">0</span> items)</h4>
             <div class="modal-item-list" id="modal-item-list">
-              <!-- Item list injected by JS -->
+              <!-- Item list injected by JS with Rupee pricing -->
             </div>
 
             <div class="sidebar-totals">
               <div class="summary-row">
                 <span>Subtotal</span>
-                <span id="modal-subtotal">$0.00</span>
+                <span id="modal-subtotal">₹0.00</span>
               </div>
               <div class="summary-row" id="modal-discount-row" style="display: none;">
                 <span class="text-accent">Promo Discount</span>
-                <span class="text-accent" id="modal-discount">-$0.00</span>
+                <span class="text-accent" id="modal-discount">-₹0.00</span>
               </div>
               <div class="summary-row">
                 <span>Standard Delivery</span>
@@ -370,13 +370,13 @@
               </div>
               <div class="summary-row summary-total">
                 <span>Total Amount Due</span>
-                <span id="modal-total">$0.00</span>
+                <span id="modal-total">₹0.00</span>
               </div>
             </div>
 
             <div class="trust-badge-box">
               <div class="trust-item">🛡️ 256-bit Bank Grade SSL Encryption</div>
-              <div class="trust-item">🔒 Verified Visa / Mastercard 3D Secure</div>
+              <div class="trust-item">🔒 Verified RuPay / Visa / Mastercard 3DS</div>
               <div class="trust-item">📦 30-Day Hassle-Free Returns</div>
             </div>
           </div>
@@ -397,7 +397,7 @@
           <div class="progress-timeline">
             <div class="timeline-step step-done" id="step-1">
               <span class="step-bullet">✓</span>
-              <span class="step-text">Payment Details Encrypted</span>
+              <span class="step-text">Payment Payload Encrypted</span>
             </div>
             <div class="timeline-step step-active" id="step-2">
               <span class="step-bullet">●</span>
@@ -413,21 +413,55 @@
           <div class="stuck-alert-box" id="stuck-banner" style="display: none;">
             <div class="stuck-alert-header">
               <span class="pulse-warning-dot"></span>
-              <strong>PAYMENT IN PROGRESS (PENDING BANK ACKNOWLEDGEMENT)</strong>
+              <strong>TRANSACTION STATUS: PENDING (STUCK AT ISSUING BANK)</strong>
             </div>
-            <p>Your payment request was transmitted, but <strong>your bank's authorization response is delayed</strong>. The transaction is currently waiting for confirmation.</p>
+            <p>Your payment request was transmitted, but <strong>your bank's authorization response is delayed / unresponsive</strong>. The transaction is currently waiting for confirmation.</p>
             
-            <div class="stuck-meta-card">
-              <div><strong>Reference ID:</strong> <span class="font-mono" id="stuck-txn-id">TXN_STUCK_992104</span></div>
-              <div><strong>Status:</strong> <span class="badge-pending">PAYMENT_PENDING</span></div>
-              <div><strong>Time Elapsed:</strong> <span id="stuck-timer-counter" class="font-mono">14s</span></div>
+            <div class="error-details-card" style="margin-bottom: 1rem;">
+              <div class="error-meta-row">
+                <span class="error-label">Transaction ID:</span>
+                <span class="error-value font-mono" id="stuck-txn-id">TXN_STUCK_992104_INR</span>
+              </div>
+              <div class="error-meta-row">
+                <span class="error-label">Amount Attempted:</span>
+                <span class="error-value font-mono text-warning" id="stuck-amount">₹0.00</span>
+              </div>
+              <div class="error-meta-row">
+                <span class="error-label">Bank Ref / RRN:</span>
+                <span class="error-value font-mono" id="stuck-rrn">RRN-9938210948</span>
+              </div>
+              <div class="error-meta-row">
+                <span class="error-label">Payment Method:</span>
+                <span class="error-value" id="stuck-method">Card Payment</span>
+              </div>
+              <div class="error-meta-row">
+                <span class="error-label">Status:</span>
+                <span class="badge-pending">PAYMENT_PENDING_MERCHANT_ACK</span>
+              </div>
+              <div class="error-meta-row">
+                <span class="error-label">Time Elapsed:</span>
+                <span id="stuck-timer-counter" class="font-mono">14s</span>
+              </div>
+            </div>
+
+            <!-- Prominent Contact Callout for Stuck State -->
+            <div class="retailer-contact-alert">
+              <div class="retailer-alert-icon">⚠️</div>
+              <div class="retailer-alert-body">
+                <strong class="retailer-alert-title">PLEASE CONTACT THE PROVIDER OR RETAILER</strong>
+                <p>If money was debited from your bank account or UPI handle, please contact our merchant support desk immediately with the Transaction ID above.</p>
+                <div class="retailer-contact-details">
+                  <span>📧 <strong>Support Email:</strong> support@aurastudio.in</span>
+                  <span>📞 <strong>Merchant Helpdesk:</strong> 1800-2872-7883 (Toll Free)</span>
+                </div>
+              </div>
             </div>
 
             <!-- Customer Actions for Stuck State -->
-            <div class="recovery-actions-panel">
+            <div class="recovery-actions-panel" style="margin-top: 1rem;">
               <div class="recovery-btn-group">
                 <button class="btn btn-success-outline btn-sm" id="sim-force-resolve-success-btn">
-                  🔄 Re-check Bank Status (Auto-Reconcile)
+                  🔄 Check Bank Status / Auto-Reconcile
                 </button>
                 <button class="btn btn-secondary btn-sm" id="cancel-stuck-btn">
                   Return to Checkout &amp; Try Another Method
@@ -445,24 +479,56 @@
             <span>✕</span>
           </div>
           <h2 class="state-title text-danger" id="failed-title">Payment Unsuccessful</h2>
-          <p class="state-desc" id="failed-desc">We were unable to process your payment. Your card has not been charged.</p>
+          <p class="state-desc" id="failed-desc">We were unable to process your payment. Your account has not been debited.</p>
 
+          <!-- Comprehensive Transaction Details Card -->
           <div class="error-details-card">
+            <div class="error-details-header">
+              <span>TRANSACTION BREAKDOWN &amp; AUDIT TRAIL</span>
+              <span class="badge-danger">FAILED</span>
+            </div>
+            
+            <div class="error-meta-row">
+              <span class="error-label">Transaction ID:</span>
+              <span class="error-value font-mono text-primary" id="failed-txn-id">TXN_FAIL_883019_INR</span>
+            </div>
+            <div class="error-meta-row">
+              <span class="error-label">Amount Attempted:</span>
+              <span class="error-value font-mono text-danger" id="failed-amount">₹0.00</span>
+            </div>
+            <div class="error-meta-row">
+              <span class="error-label">Payment Channel:</span>
+              <span class="error-value" id="failed-method">Debit / Credit Card</span>
+            </div>
+            <div class="error-meta-row">
+              <span class="error-label">Bank Gateway RRN:</span>
+              <span class="error-value font-mono" id="failed-rrn">RRN-783920194821</span>
+            </div>
             <div class="error-meta-row">
               <span class="error-label">Error Code:</span>
               <span class="error-value font-mono text-danger" id="error-code-val">ERR_PAYMENT_DECLINED</span>
             </div>
             <div class="error-meta-row">
-              <span class="error-label">Reason:</span>
-              <span class="error-value" id="error-reason-val">Card issuer declined the transaction (Insufficient funds or 3DS check).</span>
-            </div>
-            <div class="error-meta-row">
-              <span class="error-label">Transaction ID:</span>
-              <span class="error-value font-mono" id="failed-txn-id">TXN_FAIL_883019</span>
+              <span class="error-label">Failure Reason:</span>
+              <span class="error-value" id="error-reason-val">Card issuer declined the transaction (Insufficient balance or high-risk lock).</span>
             </div>
             <div class="error-meta-row">
               <span class="error-label">Timestamp:</span>
-              <span class="error-value font-mono" id="failed-timestamp">2026-09-18 23:14:00</span>
+              <span class="error-value font-mono" id="failed-timestamp">18 Sep 2026, 23:28:00 IST</span>
+            </div>
+          </div>
+
+          <!-- PROMINENT CONTACT THE PROVIDER OR RETAILER BANNER -->
+          <div class="retailer-contact-alert">
+            <div class="retailer-alert-icon">📞</div>
+            <div class="retailer-alert-body">
+              <strong class="retailer-alert-title">PLEASE CONTACT THE PROVIDER OR RETAILER</strong>
+              <p>If amount was deducted from your account, it will be refunded within 3-5 business days. For urgent order confirmation or payment reconciliation, quote your <strong>Transaction ID</strong> to our dispute desk.</p>
+              <div class="retailer-contact-details">
+                <span>📧 <strong>Provider Email:</strong> support@aurastudio.in</span>
+                <span>📞 <strong>Retailer Support Hotline:</strong> 1800-2872-7883 (Toll-Free, 24x7)</span>
+                <span>🏢 <strong>Merchant Desk:</strong> AURA Studio Retail Payments Cell</span>
+              </div>
             </div>
           </div>
 
@@ -472,6 +538,9 @@
             </button>
             <button class="btn btn-secondary" id="change-payment-method-btn">
               <span>Try Another Payment Method</span>
+            </button>
+            <button class="btn btn-ghost btn-sm" id="copy-txn-details-btn">
+              <span>📋 Copy Transaction Details for Support</span>
             </button>
           </div>
         </div>
@@ -488,15 +557,15 @@
 
           <div class="success-receipt-card">
             <div class="receipt-header">
-              <span>Receipt Ref: <strong class="font-mono" id="success-order-id">ORD-94821-AURA</strong></span>
+              <span>Receipt Ref: <strong class="font-mono" id="success-order-id">ORD-94821-INR</strong></span>
               <span class="badge-success">PAID</span>
             </div>
             <div class="receipt-items-summary" id="receipt-items-summary">
-              <!-- Rendered items -->
+              <!-- Rendered items in Rupees -->
             </div>
             <div class="receipt-total-row">
               <span>Amount Paid</span>
-              <strong id="receipt-amount-paid">$0.00</strong>
+              <strong id="receipt-amount-paid">₹0.00</strong>
             </div>
           </div>
 
